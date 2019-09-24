@@ -1,0 +1,395 @@
+---
+title: Discrete probability distributions II
+author:   
+  - Deependra Dhakal 
+institute:   
+  - \url{https://rookie.rbind.io}
+date: August, 2019
+output:   
+  beamer_presentation:  
+    incremental: false  
+    theme: "Frankfurt"  
+    colortheme: "beaver"  
+    toc: true   
+    slide_level: 2
+    keep_tex: true
+    includes:
+      in_header: probability_distributions_beamer_header.tex
+classoption: "aspectratio=169"
+header-includes: 
+- \AtBeginSubsection{}
+bibliography: [./bibliographies.bib]
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+require(tidyverse)
+set.seed(453)
+# invalidate cache when the package version changes
+knitr::opts_chunk$set(tidy = FALSE, echo = FALSE, 
+                  message = FALSE, warning = FALSE,
+                  out.width = "52%")
+options(knitr.table.format = "latex")
+options(knitr.kable.NA = "", digits = 2)
+options(kableExtra.latex.load_packages = FALSE)
+
+# set penalty for using scientific notation at 10, and number of digits to use in notation to 10
+options(scipen = 30, digits = 15)
+
+theme_set(theme_bw())
+```
+
+# Poisson distribution
+
+## Definition
+
+A random variable X is said to follow Poisson distribution if it assumes only non-negative values and its probability mass function is given by:
+
+\[P(k, \lambda) = P(X = k) =  
+  \begin{cases} 
+    e^{-\lambda}\frac{\lambda^k}{k!}; x = 0, 1, 2, ..., n; \lambda > 0 \\
+    0, \text{ otherwise}
+  \end{cases}
+\]
+
+Here, $\lambda$ is known as the parameter of the distribution. We shall use the notation $X \sim p(\lambda)$, to denote that $X$ is a poisson variate with parameter $\lambda$.
+
+##
+
+A poisson distribution is a limiting version of the binomial distribution, where $n$ becomes large and $np$ approaches some $\lambda$, which is the mean value.
+
+The poisson distribution can be used for the number of events in other specified intervals such as distance, area or volume. Examples that may follow a Poisson include the number of phone calls received by a call center per hour and the number of decay events per second from a radioactive source.
+
+## Problem 1
+
+The average number of goals in a World Cup football match is 2.5.
+
+Probability of 4 goals in a match can be calculated as:
+
+```{r}
+lambda = 2.5
+k = 4
+
+exp(-lambda)*lambda^k/factorial(k)
+```
+
+This can be accomplished using built-in function
+
+```{r}
+dpois(4, 2.5)
+```
+
+## Problem
+
+Find probabilities of occurance of 1:10 goals and plot the poisson probability distribution
+
+```{r poisson-probability-distribution, fig.align='center'}
+dpo_df <- tibble(goals = 1:10, probability = dpois(1:10, 2.5))
+
+ggplot(data = dpo_df, aes(x = goals, y = probability)) +
+  geom_col() +
+  labs(y = "P(X = Number of goals)", 
+       x = "Number of goals", 
+       title = "Poisson PMF")
+```
+
+# Negative binomial distribution
+
+## Definition
+
+A random variable X is said to follow a negative binomial distribution with parameters r and p if its probability mass function is given by:
+
+\[
+P(X = x) = p(x) =
+\begin{cases}
+\binom{x + r -1}{r -1}p^r q^x & x = 0, 1, 2...\\
+0, & \text{otherwise}
+\end{cases}
+\]
+
+# Geometric distribution
+
+## Definition
+
+A random variable X is said to have a geometric distribution if it assumes only non-negative values and its probability mass function is given by:
+
+\[
+P(X = x) =
+\begin{cases}
+q^x p;  & x = 0, 1, 2...; 0 < p \leq 1; q = 1-p \\
+0, & \text{otherwise}
+\end{cases}
+\]
+
+# Hypergeometric distribution
+
+## Definition
+
+A random variable X is said follow the hypergeometric distribution with its parameters $N$, $M$ and $n$ if it assumes only non-negative values and its pmf is given by:
+
+\[
+P(X = k) = h(k; N, M, n)
+\begin{cases}
+\frac{\binom{M}{k}\binom{N-M}{n-k}}{\binom{N}{n}}; k = 0, 1, 2, ..., min(n, M). \\
+0, & \text{otherwise}
+\end{cases}
+\]
+
+# Multinomial distribution
+
+## Meaning
+
+This distriubtion can be regarded as a generalization of Binomial distribution.
+
+When there are more than two mutually exclusive outcomes of a trial, the observations lead to multinomial distribution. Suppose $E_1, E_2, ..., E_k$ are k mutually exclusive and exhaustive outcomes of a trial with respective probabilities $p_1, p_2, ... p_k$.
+
+The probability that $E_1$ occurs $x_1$ times, $E_2$, occurs $x_2$ times ... and $E_k$, occurs $x_k$ times in n independent observations, is given by $p(x_1, x_2, ..., x_k) = cp_1^{x_1} p_2^{x_2}...p_k^{x_k}$, where $\sum x_i = n$ and $c$ is the number of permutation of the events $E_1, E_2,...,E_k$.
+
+To determine $c$, we have to find the number of permutations of $n$ objects of which $x_1$ are of one kind, $x_2$ of another kind, ..., $x_k$ of the $k$th kind, which is given by:
+
+##
+
+$$
+c = \frac{n!}{x_1! x_2! ... x_k!}
+$$
+
+$$
+\begin{aligned}
+& \text{Hence } & p(x_1, x_2, ..., x_k) &= \frac{n!}{x_1! x_2! ... x_k!} p_1^{x_1} p_2^{x_2} ... p_k^{x_k}, 0 \leq x_i \leq n \\
+& & &= \frac{n!}{\prod_{i = 1}^ k x!} \prod_{i = 1}^k p_i^{x_i}; \sum_{i = 1}^k x_i = n
+\end{aligned}
+$$
+
+Which is the required probability function of the multinomial distribution. It is so called since the above expression is the general term in the multinomial expansion:
+
+$$
+(p_1 + p_2 + ... + p_k)^n, \sum_{i = 1}^k p_i = 1
+$$
+
+# Power series distribution
+
+## Definition
+
+A discrete r.v. X is said to follow a generalized power series distribution (g.p.s.d), if its probability mass function is given by:
+
+\[
+\large
+P(X = x) =
+\begin{cases}
+\frac{a_x \theta^x}{f(\theta)};  & x = 0, 1, 2...; a_x \geq 0 \\
+0, & \text{elsewhere}
+\end{cases}
+\]
+
+Where $f(\theta)$is a generating function i.e.,
+
+$$
+f(\theta) = \sum_{x \in s} a_x \theta^x, \theta \geq 0
+$$
+
+So that $f(\theta)$ is positive, finite and differentiable and S is a non-empty countable subset of non-negative integers.
+
+# Normal distribution
+
+## Normal density
+
+The `dnorm(x, mean = 0, sd = 1, log = FALSE)` function simply calculates the result for the value plugged into the probability density distribution or probability mass function if it is a discrete distribution.
+
+So for the normal distribution with $mean=0$, $sd=1$, we have
+
+$$
+\frac{1}{\sqrt{2\pi}}e^{\frac{-x^2}{2}}
+$$
+
+If we plug $x = 2$ inside the pdf, we have
+
+```{r}
+1 / sqrt(2 * pi) * exp(-2^2 / 2)
+# dnorm(2, mean = 0, sd = 1) # this yields same
+```
+
+## Normal distribution function
+
+`pnorm(q, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE)` returns the probabality of $p(X \leq x)$ by default. If we set `low.tail = FALSE`, then it returns $p(X > x) = 1-p (X \leq x)$.
+
+##
+
+Let's look at an extreme example which is the one I mentioned above. What is the probability that $p(X < 10000)$ for $N(0,1)$. It is almost certainly that it should be 1. In another word, $p(x>10000)$ is 0. You can imagine the chance of having a human being whose height is 40m (ultraman).
+
+```{r}
+pnorm(0, mean = 0, sd = 1)
+pnorm(10000, mean = 0, sd = 1)
+```
+
+## Normal quantile
+
+One way of defining `qnorm` is that it is the inverse of `pnorm`. So in expression `qnorm(p, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE)`, the parameter `p` inside the `qnorm` need to be within $[0, 1]$ ($p \in [0,1]$).
+
+So,
+
+```{r}
+qnorm(0.999, mean = 0, sd = 1, lower.tail = TRUE)
+```
+
+And,
+
+```{r}
+pnorm(3.09023, mean = 0, sd = 1, lower.tail = TRUE)
+```
+
+# Inferring a binomial distribution
+
+## Beta Distribution
+
+Defined here is a function `bern_beta()` which assumes a beta prior with the prior parameters, $a$ and $b$ to be input along with the data parameters $N$ and $z$. The ouput is a faceted plot of the prior, likelihood, and posterior distributions.
+
+```{r beta-distribution, cache=TRUE, fig.align='center'}
+beta_df <- tibble(
+  theta = seq(0, 1, by = 0.01),
+  p_theta = dbeta(theta, 4, 2)
+)
+beta_df %>% 
+  ggplot(aes(theta, p_theta)) + 
+  geom_line()
+```
+
+
+```{r bernoulli-beta, cache=TRUE}
+bern_beta <- function(a, b, N, z) {
+  bern_beta_df <- tibble(
+    theta = seq(0, 1, by = 0.01),
+    prior = dbeta(theta, a, b), # beta prior
+    likelihood = theta ^ z * (1 - theta) ^ (N - z), # bernoulli likelihood
+    posterior = dbeta(theta, a + z, b + N - z) # beta posterior
+  )
+  # ouput is faceted plot of prior, likelihood, and posterior
+  cat("posterior beta parameters", a + z, b + N -z)
+  bern_beta_df %>% 
+    gather(type, prob, -theta) %>% 
+    mutate(type = factor(type, levels = c("prior", "likelihood", "posterior"))) %>% 
+    ggplot(aes(theta, prob)) + 
+    geom_line(col = "cornflowerblue") + 
+    geom_area(fill = "cornflowerblue") +
+    facet_wrap(~type, ncol = 1, scales = "free")
+}
+```
+
+##
+
+`bern_beta(100, 100, 20, 17)`
+
+```{r bernoulli-beta-example1, cache=TRUE, fig.align='center'}
+bern_beta(100, 100, 20, 17)
+```
+
+##
+
+`bern_beta(18.25, 6.75, 20, 17)`
+
+```{r bernoulli-beta-example2, cache=TRUE, fig.align='center'}
+bern_beta(18.25, 6.75, 20, 17)
+```
+
+##
+
+`bern_beta(1, 1, 20, 17)`
+
+```{r bernoulli-beta-example3, cache=TRUE, fig.align='center'}
+bern_beta(1, 1, 20, 17)
+```
+
+<!-- ## Non-beta prior -->
+
+<!-- This reproduces Figure 6.5 in the text. [?? Which text ??]-->
+
+<!-- ```{r non-beta-prior, cache=TRUE, fig.align='center'} -->
+<!-- two_peak <- rep(c(rep(1, 200), seq(1, 100, length = 50), seq(100, 1, length = 50), rep(1, 200)),2) -->
+<!-- coin_df <- tibble( -->
+<!--   theta = seq(0, 1, length = 1000), -->
+<!--   prior = two_peak / sum(two_peak), -->
+<!--   likelihood = theta ^ 14 * (1 - theta) ^ (27 - 14), -->
+<!--   posterior = prior * likelihood / sum(prior * likelihood) -->
+<!-- ) -->
+<!-- # plot -->
+<!-- coin_df %>%  -->
+<!--   gather(type, prob, -theta) %>%  -->
+<!--   mutate(type = factor(type, levels = c("prior", "likelihood", "posterior"))) %>%  -->
+<!--   ggplot(aes(theta, prob)) +  -->
+<!--   geom_line(col = "cornflowerblue") +  -->
+<!--   geom_area(fill = "cornflowerblue") + -->
+<!--   facet_wrap(~type, ncol = 1, scales = "free") -->
+<!-- ``` -->
+
+# Bayesian probabilistic inference
+
+## Which coin
+
+Create three coins, one fair and two biased: 
+
+```{r}
+theta_coin1 <- 0.4
+theta_coin2 <- 0.5
+theta_coin3 <- 0.6
+coin_df <- tibble(
+  model = factor(c("coin1", "coin2", "coin3")),
+  prior = rep(1/3, 3)
+)
+```
+
+Randomly select one of them but keep its identity secret:
+
+```{r}
+theta <- sample(c(theta_coin1, theta_coin2, theta_coin3), 1)
+```
+
+Flip it 5 times and report the number of heads: 
+
+```{r}
+flips <- sample(c(0, 1), 5, replace = TRUE, prob = c(1 - theta, theta))
+heads <- sum(flips)
+heads
+```
+
+##
+
+Use this information to calculate likelihoods:
+
+```{r}
+# coin1:
+replications <- replicate(
+  50000, 
+  sum(sample(c(0, 1), 5, replace = TRUE, prob = c(1 - theta_coin1, theta_coin1)))
+)
+likelihood_coin1 <- mean(replications == heads)
+# coin2:
+replications <- replicate(
+  50000, 
+  sum(sample(c(0, 1), 5, replace = TRUE, prob = c(1 - theta_coin2, theta_coin2)))
+)
+likelihood_coin2 <- mean(replications == heads)
+# coin3:
+replications <- replicate(
+  50000, 
+  sum(sample(c(0, 1), 5, replace = TRUE, prob = c(1 - theta_coin3, theta_coin3)))
+)
+likelihood_coin3 <- mean(replications == heads)
+coin_df$likelihood <- c(likelihood_coin1, likelihood_coin2, likelihood_coin3)
+```
+
+Update your belief about which coin is being flipped:
+
+```{r}
+coin_df$product <- coin_df$prior * coin_df$likelihood
+coin_df$posterior <- coin_df$product / sum(coin_df$product)
+coin_df
+```
+
+Repeat.
+
+# Bibliography
+
+## Further study
+
+Also see: @gupta2002fundamentals
+
+## References

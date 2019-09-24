@@ -1,0 +1,538 @@
+\PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[ignorenonframetext,aspectratio=169]{beamer}
+\usepackage{pgfpages}
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{caption label separator}{: }
+\setbeamercolor{caption name}{fg=normal text.fg}
+\beamertemplatenavigationsymbolsempty
+% Prevent slide breaks in the middle of a paragraph:
+\widowpenalties 1 10000
+\raggedbottom
+\setbeamertemplate{part page}{
+\centering
+\begin{beamercolorbox}[sep=16pt,center]{part title}
+  \usebeamerfont{part title}\insertpart\par
+\end{beamercolorbox}
+}
+\setbeamertemplate{section page}{
+\centering
+\begin{beamercolorbox}[sep=12pt,center]{part title}
+  \usebeamerfont{section title}\insertsection\par
+\end{beamercolorbox}
+}
+\setbeamertemplate{subsection page}{
+\centering
+\begin{beamercolorbox}[sep=8pt,center]{part title}
+  \usebeamerfont{subsection title}\insertsubsection\par
+\end{beamercolorbox}
+}
+\AtBeginPart{
+  \frame{\partpage}
+}
+\AtBeginSection{
+  \ifbibliography
+  \else
+    \frame{\sectionpage}
+  \fi
+}
+\AtBeginSubsection{
+  \frame{\subsectionpage}
+}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provides euro and other symbols
+\else % if luatex or xelatex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+\usetheme[]{Frankfurt}
+\usecolortheme{beaver}
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage[]{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\usepackage{hyperref}
+\hypersetup{
+            pdftitle={Discrete probability distributions II},
+            pdfauthor={Deependra Dhakal},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\newif\ifbibliography
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+
+% set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+% \usepackage{setspace}
+% \usepackage{wasysym}
+% \usepackage{footnote} % don't use this this breaks all
+% \usepackage{fontenc}
+% \usepackage{fontawesome}
+\usepackage{booktabs,siunitx}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+% \usepackage[normalem]{ulem}
+% \usepackage{makecell}
+\usepackage{xcolor}
+\usepackage{tikz} % required for image opacity change
+% \usepackage[absolute,overlay]{textpos} % for text formatting
+% \usepackage{chemfig}
+\usepackage[skip=0.333\baselineskip]{caption}
+% \newcommand*{\AlignChar}[1]{\makebox[1ex][c]{\ensuremath{\scriptstyle#1}}}%
+
+% this font option is amenable for beamer
+\setbeamerfont{caption}{size=\tiny}
+
+% some beamer themes naturally might not support navigation symbols
+% \setbeamertemplate{navigation symbols}{} % remove navigation symbols
+
+\setbeamertemplate{footline}[page number] % insert page number in footline
+
+% \setbeamertemplate{navigation symbols}{slide} % insert slide indication in navigation
+% \setbeamertemplate{navigation symbols}{frame} % insert frame indication in navigation
+% \setbeamertemplate{navigation symbols}{section} % insert section indication in navigation
+% \setbeamertemplate{navigation symbols}{subsection} % insert subsection indication in navigation
+
+% \AtBeginSubsection{} % supress subsection display
+
+\title{Discrete probability distributions II}
+\author{Deependra Dhakal}
+\providecommand{\institute}[1]{}
+\institute{\url{https://rookie.rbind.io}}
+\date{Academic year 2019-2020}
+
+\begin{document}
+\frame{\titlepage}
+
+\begin{frame}
+\tableofcontents[hideallsubsections]
+\end{frame}
+\hypertarget{poisson-distribution}{%
+\section{Poisson distribution}\label{poisson-distribution}}
+
+\begin{frame}{Definition}
+\protect\hypertarget{definition}{}
+
+A random variable X is said to follow Poisson distribution if it assumes
+only non-negative values and its probability mass function is given by:
+
+\[P(k, \lambda) = P(X = k) =  
+  \begin{cases} 
+    e^{-\lambda}\frac{\lambda^k}{k!}; x = 0, 1, 2, ..., n; \lambda > 0 \\
+    0, \text{ otherwise}
+  \end{cases}
+\]
+
+Here, \(\lambda\) is known as the parameter of the distribution. We
+shall use the notation \(X \sim p(\lambda)\), to denote that \(X\) is a
+poisson variate with parameter \(\lambda\).
+
+\end{frame}
+
+\begin{frame}{}
+\protect\hypertarget{section}{}
+
+A poisson distribution is a limiting version of the binomial
+distribution, where \(n\) becomes large and \(np\) approaches some
+\(\lambda\), which is the mean value.
+
+The poisson distribution can be used for the number of events in other
+specified intervals such as distance, area or volume. Examples that may
+follow a Poisson include the number of phone calls received by a call
+center per hour and the number of decay events per second from a
+radioactive source.
+
+\end{frame}
+
+\begin{frame}[fragile]{Problem 1}
+\protect\hypertarget{problem-1}{}
+
+The average number of goals in a World Cup football match is 2.5.
+
+Probability of 4 goals in a match can be calculated as:
+
+\begin{verbatim}
+## [1] 0.133601885781085
+\end{verbatim}
+
+This can be accomplished using built-in function
+
+\begin{verbatim}
+## [1] 0.133601885781085
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}{Problem}
+\protect\hypertarget{problem}{}
+
+Find probabilities of occurance of 1:10 goals and plot the poisson
+probability distribution
+
+\begin{center}\includegraphics[width=0.52\linewidth]{discrete_probability_distributions-II_files/figure-beamer/poisson-probability-distribution-1} \end{center}
+
+\end{frame}
+
+\hypertarget{negative-binomial-distribution}{%
+\section{Negative binomial
+distribution}\label{negative-binomial-distribution}}
+
+\begin{frame}{Definition}
+\protect\hypertarget{definition-1}{}
+
+A random variable X is said to follow a negative binomial distribution
+with parameters r and p if its probability mass function is given by:
+
+\[
+P(X = x) = p(x) =
+\begin{cases}
+\binom{x + r -1}{r -1}p^r q^x & x = 0, 1, 2...\\
+0, & \text{otherwise}
+\end{cases}
+\]
+
+\end{frame}
+
+\hypertarget{geometric-distribution}{%
+\section{Geometric distribution}\label{geometric-distribution}}
+
+\begin{frame}{Definition}
+\protect\hypertarget{definition-2}{}
+
+A random variable X is said to have a geometric distribution if it
+assumes only non-negative values and its probability mass function is
+given by:
+
+\[
+P(X = x) =
+\begin{cases}
+q^x p;  & x = 0, 1, 2...; 0 < p \leq 1; q = 1-p \\
+0, & \text{otherwise}
+\end{cases}
+\]
+
+\end{frame}
+
+\hypertarget{hypergeometric-distribution}{%
+\section{Hypergeometric
+distribution}\label{hypergeometric-distribution}}
+
+\begin{frame}{Definition}
+\protect\hypertarget{definition-3}{}
+
+A random variable X is said follow the hypergeometric distribution with
+its parameters \(N\), \(M\) and \(n\) if it assumes only non-negative
+values and its pmf is given by:
+
+\[
+P(X = k) = h(k; N, M, n)
+\begin{cases}
+\frac{\binom{M}{k}\binom{N-M}{n-k}}{\binom{N}{n}}; k = 0, 1, 2, ..., min(n, M). \\
+0, & \text{otherwise}
+\end{cases}
+\]
+
+\end{frame}
+
+\hypertarget{multinomial-distribution}{%
+\section{Multinomial distribution}\label{multinomial-distribution}}
+
+\begin{frame}{Meaning}
+\protect\hypertarget{meaning}{}
+
+This distriubtion can be regarded as a generalization of Binomial
+distribution.
+
+When there are more than two mutually exclusive outcomes of a trial, the
+observations lead to multinomial distribution. Suppose
+\(E_1, E_2, ..., E_k\) are k mutually exclusive and exhaustive outcomes
+of a trial with respective probabilities \(p_1, p_2, ... p_k\).
+
+The probability that \(E_1\) occurs \(x_1\) times, \(E_2\), occurs
+\(x_2\) times \ldots{} and \(E_k\), occurs \(x_k\) times in n
+independent observations, is given by
+\(p(x_1, x_2, ..., x_k) = cp_1^{x_1} p_2^{x_2}...p_k^{x_k}\), where
+\(\sum x_i = n\) and \(c\) is the number of permutation of the events
+\(E_1, E_2,...,E_k\).
+
+To determine \(c\), we have to find the number of permutations of \(n\)
+objects of which \(x_1\) are of one kind, \(x_2\) of another kind,
+\ldots{}, \(x_k\) of the \(k\)th kind, which is given by:
+
+\end{frame}
+
+\begin{frame}{}
+\protect\hypertarget{section-1}{}
+
+\[
+c = \frac{n!}{x_1! x_2! ... x_k!}
+\]
+
+\[
+\begin{aligned}
+& \text{Hence } & p(x_1, x_2, ..., x_k) &= \frac{n!}{x_1! x_2! ... x_k!} p_1^{x_1} p_2^{x_2} ... p_k^{x_k}, 0 \leq x_i \leq n \\
+& & &= \frac{n!}{\prod_{i = 1}^ k x!} \prod_{i = 1}^k p_i^{x_i}; \sum_{i = 1}^k x_i = n
+\end{aligned}
+\]
+
+Which is the required probability function of the multinomial
+distribution. It is so called since the above expression is the general
+term in the multinomial expansion:
+
+\[
+(p_1 + p_2 + ... + p_k)^n, \sum_{i = 1}^k p_i = 1
+\]
+
+\end{frame}
+
+\hypertarget{power-series-distribution}{%
+\section{Power series distribution}\label{power-series-distribution}}
+
+\begin{frame}{Definition}
+\protect\hypertarget{definition-4}{}
+
+A discrete r.v. X is said to follow a generalized power series
+distribution (g.p.s.d), if its probability mass function is given by:
+
+\[
+\large
+P(X = x) =
+\begin{cases}
+\frac{a_x \theta^x}{f(\theta)};  & x = 0, 1, 2...; a_x \geq 0 \\
+0, & \text{elsewhere}
+\end{cases}
+\]
+
+Where \(f(\theta)\)is a generating function i.e.,
+
+\[
+f(\theta) = \sum_{x \in s} a_x \theta^x, \theta \geq 0
+\]
+
+So that \(f(\theta)\) is positive, finite and differentiable and S is a
+non-empty countable subset of non-negative integers.
+
+\end{frame}
+
+\hypertarget{normal-distribution}{%
+\section{Normal distribution}\label{normal-distribution}}
+
+\begin{frame}[fragile]{Normal density}
+\protect\hypertarget{normal-density}{}
+
+The \texttt{dnorm(x,\ mean\ =\ 0,\ sd\ =\ 1,\ log\ =\ FALSE)} function
+simply calculates the result for the value plugged into the probability
+density distribution or probability mass function if it is a discrete
+distribution.
+
+So for the normal distribution with \(mean=0\), \(sd=1\), we have
+
+\[
+\frac{1}{\sqrt{2\pi}}e^{\frac{-x^2}{2}}
+\]
+
+If we plug \(x = 2\) inside the pdf, we have
+
+\begin{verbatim}
+## [1] 0.0539909665131881
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Normal distribution function}
+\protect\hypertarget{normal-distribution-function}{}
+
+\texttt{pnorm(q,\ mean\ =\ 0,\ sd\ =\ 1,\ lower.tail\ =\ TRUE,\ log.p\ =\ FALSE)}
+returns the probabality of \(p(X \leq x)\) by default. If we set
+\texttt{low.tail\ =\ FALSE}, then it returns
+\(p(X > x) = 1-p (X \leq x)\).
+
+\end{frame}
+
+\begin{frame}[fragile]{}
+\protect\hypertarget{section-2}{}
+
+Let's look at an extreme example which is the one I mentioned above.
+What is the probability that \(p(X < 10000)\) for \(N(0,1)\). It is
+almost certainly that it should be 1. In another word, \(p(x>10000)\) is
+0. You can imagine the chance of having a human being whose height is
+40m (ultraman).
+
+\begin{verbatim}
+## [1] 0.5
+\end{verbatim}
+
+\begin{verbatim}
+## [1] 1
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Normal quantile}
+\protect\hypertarget{normal-quantile}{}
+
+One way of defining \texttt{qnorm} is that it is the inverse of
+\texttt{pnorm}. So in expression
+\texttt{qnorm(p,\ mean\ =\ 0,\ sd\ =\ 1,\ lower.tail\ =\ TRUE,\ log.p\ =\ FALSE)},
+the parameter \texttt{p} inside the \texttt{qnorm} need to be within
+\([0, 1]\) (\(p \in [0,1]\)).
+
+So,
+
+\begin{verbatim}
+## [1] 3.09023230616781
+\end{verbatim}
+
+And,
+
+\begin{verbatim}
+## [1] 0.998999992234898
+\end{verbatim}
+
+\end{frame}
+
+\hypertarget{inferring-a-binomial-distribution}{%
+\section{Inferring a binomial
+distribution}\label{inferring-a-binomial-distribution}}
+
+\begin{frame}[fragile]{Beta Distribution}
+\protect\hypertarget{beta-distribution}{}
+
+Defined here is a function \texttt{bern\_beta()} which assumes a beta
+prior with the prior parameters, \(a\) and \(b\) to be input along with
+the data parameters \(N\) and \(z\). The ouput is a faceted plot of the
+prior, likelihood, and posterior distributions.
+
+\begin{center}\includegraphics[width=0.52\linewidth]{discrete_probability_distributions-II_files/figure-beamer/beta-distribution-1} \end{center}
+
+\end{frame}
+
+\begin{frame}[fragile]{}
+\protect\hypertarget{section-3}{}
+
+\texttt{bern\_beta(100,\ 100,\ 20,\ 17)}
+
+\begin{verbatim}
+## posterior beta parameters 117 103
+\end{verbatim}
+
+\begin{center}\includegraphics[width=0.52\linewidth]{discrete_probability_distributions-II_files/figure-beamer/bernoulli-beta-example1-1} \end{center}
+
+\end{frame}
+
+\begin{frame}[fragile]{}
+\protect\hypertarget{section-4}{}
+
+\texttt{bern\_beta(18.25,\ 6.75,\ 20,\ 17)}
+
+\begin{verbatim}
+## posterior beta parameters 35.25 9.75
+\end{verbatim}
+
+\begin{center}\includegraphics[width=0.52\linewidth]{discrete_probability_distributions-II_files/figure-beamer/bernoulli-beta-example2-1} \end{center}
+
+\end{frame}
+
+\begin{frame}[fragile]{}
+\protect\hypertarget{section-5}{}
+
+\texttt{bern\_beta(1,\ 1,\ 20,\ 17)}
+
+\begin{verbatim}
+## posterior beta parameters 18 4
+\end{verbatim}
+
+\begin{center}\includegraphics[width=0.52\linewidth]{discrete_probability_distributions-II_files/figure-beamer/bernoulli-beta-example3-1} \end{center}
+
+\end{frame}
+
+\hypertarget{bayesian-probabilistic-inference}{%
+\section{Bayesian probabilistic
+inference}\label{bayesian-probabilistic-inference}}
+
+\begin{frame}[fragile]{Which coin}
+\protect\hypertarget{which-coin}{}
+
+Create three coins, one fair and two biased:
+
+Randomly select one of them but keep its identity secret:
+
+Flip it 5 times and report the number of heads:
+
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{}
+\protect\hypertarget{section-6}{}
+
+Use this information to calculate likelihoods:
+
+Update your belief about which coin is being flipped:
+
+\begin{verbatim}
+## # A tibble: 3 x 5
+##   model prior likelihood product posterior
+##   <fct> <dbl>      <dbl>   <dbl>     <dbl>
+## 1 coin1 0.333      0.226  0.0754     0.255
+## 2 coin2 0.333      0.315  0.105      0.356
+## 3 coin3 0.333      0.345  0.115      0.389
+\end{verbatim}
+
+Repeat.
+
+\end{frame}
+
+\hypertarget{bibliography}{%
+\section{Bibliography}\label{bibliography}}
+
+\begin{frame}{Further study}
+\protect\hypertarget{further-study}{}
+
+Also see: Gupta (2002)
+
+\end{frame}
+
+\begin{frame}{References}
+\protect\hypertarget{references}{}
+
+\hypertarget{refs}{}
+\leavevmode\hypertarget{ref-gupta2002fundamentals}{}%
+Gupta, VK, SC; Kapoor. 2002. \emph{Fundamentals of Mathematical
+Statistics: A Modern Approach}. Eleventh. Sultan Chand; Sons.
+
+\end{frame}
+
+\end{document}

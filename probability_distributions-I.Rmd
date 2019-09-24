@@ -1,0 +1,888 @@
+---
+title: Discrete probability distributions I
+author:   
+  - Deependra Dhakal 
+institute:   
+  - \url{https://rookie.rbind.io}
+date: August, 2019
+output:   
+  beamer_presentation:  
+    incremental: false  
+    theme: "Frankfurt"  
+    colortheme: "beaver"  
+    toc: true   
+    slide_level: 2
+    keep_tex: true
+    includes:
+      in_header: probability_distributions_beamer_header.tex
+classoption: "aspectratio=169"
+header-includes: 
+- \AtBeginSubsection{}
+bibliography: [./bibliographies.bib]
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+require(tidyverse)
+set.seed(453)
+# invalidate cache when the package version changes
+knitr::opts_chunk$set(tidy = FALSE, echo = FALSE, 
+                  message = FALSE, warning = FALSE,
+                  out.width = "45%")
+options(knitr.table.format = "latex")
+options(knitr.kable.NA = "", digits = 2)
+options(kableExtra.latex.load_packages = FALSE)
+
+# set penalty for using scientific notation at 10, and number of digits to use in notation to 10
+options(scipen = 30, digits = 15)
+
+theme_set(theme_bw())
+```
+
+# Probability distributions
+
+## Sample Spaces and Events^[https://jasonbintz.rbind.io/courses/math333/notes/probability-distributions/]
+
+An **experiment** is any action or process whose outcome is subject to uncertainty. The **sample space** of an experiment, denoted $\mathcal S$, is the set of all possible outcomes of that experiment. An **event** is any subset of $\mathcal S$.
+
+## Axioms of Probability
+
+Let $\mathcal{S}$ be a sample space, $E$ an event and $\{E_1, E_2, ... \}$ a countable collection of pairwise disjoint events. Then,
+
+1.  $P(E)\geq 0$
+1.  $P(\mathcal{S})=1$
+1.  $P\left(\bigcup\limits_{i=1}^{\infty} E_{i}\right) = \sum\limits_{i=1}^{\infty} P(E_i)$ 
+
+## Random Variable
+
+Let $\mathcal{S}$ be a sample space and let $X:\mathcal{S}\rightarrow\mathbb{R}$. Then $X$ is a **random variable**.
+
+## Problem 1
+
+For a coin toss we have $\mathcal{S}=\{T, H\}$. Let $X:\mathcal{S}\rightarrow\mathbb{R}$ with $X(T)=0$ and $X(H)=1$. 
+
+A random variable is a **discrete random variable** if its set of values is countable. A random variable is **continuous** if its set of values is an interval. (That's not quite accurate, but it's good enough.)
+
+## Probability Distributions
+
+When probabilities are assigned to the outcomes in $\mathcal{S}$, these in turn determine probabilities associated with the values of any random variable $X$ defined on $\mathcal{S}$. The **probability distribution of $X$** describes how the total probability of 1 is distributed among the values of $X$.
+
+## Probability Mass Function (pmf)
+
+Let $X:\mathcal{S}\rightarrow\mathbb{R}$ be a discrete random variable. The **probability mass function of $X$** (pmf) is the function $p:\mathbb{R}\rightarrow[0,1]$ such that for all $x\in\mathbb{R}$, $p(x)=P(X=x)$. 
+
+## Problem 2
+
+The pmf for the random variable in the previous example where the probability of heads is $\theta$ is given by
+
+\[p(x) = 
+  \begin{cases} 
+    1-\theta & \text{if  } x=0 \\ 
+    \theta & \text{if  } x=1 \\
+    0 & \text{otherwise}
+  \end{cases}
+\]
+
+##
+
+Probability mass functions can be visualized with a line graph. For $\theta = 0.2, 0.5,$ and $0.8$:
+
+```{r bernoulli-viz, echo=FALSE, fig.align='center', cache=TRUE}
+ber_df <- tibble(
+  theta = c(0.2, 0.2, 0.5, 0.5, 0.8, 0.8),
+  x = rep(c(0,1), 3),
+  p_x = c(0.8, 0.2, 0.5, 0.5, 0.2, 0.8)
+)
+ber_df %>% ggplot(aes(x, p_x)) + 
+  geom_col(width = 0.01) + 
+  geom_point() +
+  facet_wrap(~theta, nrow = 1)
+```
+
+It's worth noting a couple of properties of a pmf:
+
+1.  $p(x)\geq 0, x \in \mathbb R$
+1.  $p(x)=0, x \notin X(\mathcal S)$
+1.  $\sum_{x\in X(\mathcal S)}p(x)=1$
+
+## Problem 3
+
+Consider the experiment of tossing a coin twice and counting the number of heads. Give the sample space, define a sensible random variable and draw a line graph for the pmf.
+
+Solution: $\mathcal{S}=\{TT, TH, HT, HH\}$. Define $X:\mathcal{S}\rightarrow\mathbb{R}$ by $X(TT)=0$, $X(TH)=X(HT)=1$ and $X(HH)=2$. Then the pmf is given by
+
+\begin{columns}[T,onlytextwidth]
+\column{.4\linewidth}
+\[p(x) = 
+  \begin{cases} 
+    0.25 & \text{if  } x=0 \\ 
+    .5 & \text{if  } x=1 \\
+    0.25 & \text{if  } x=2 \\ 
+    0 & \text{otherwise}
+  \end{cases}
+\]
+\column{.6\linewidth}
+```{r coin-toss-bernoulli, out.width="80%", cache=TRUE}
+ex1_df <- tibble(
+  x = c(0,1,2),
+  p_x = c(0.25, 0.5, 0.25)
+)
+ex1_df %>% ggplot(aes(x, p_x)) + 
+  geom_col(width = 0.01) + 
+  geom_point()
+```
+\end{columns}
+
+## Problem 4
+
+Consider the experiment of tossing a biased coin (where the probability of heads is $\theta$) until it lands on heads. Give the sample space, define a sensible random variable and draw a line graph for the pmf.
+
+Solution: $\mathcal{S}=\{H, TH, TTH, TTTH, ...\}$. Define $X:\mathcal{S}\rightarrow\mathbb{R}$ by the number of flips required. Then the pmf is given by
+
+\[p(x) = 
+  \begin{cases} 
+    (1-\theta)^{x-1}\theta, & x=1,2,3,... \\ 
+    0 & \text{otherwise}
+  \end{cases}
+\]
+
+## Probability Density Function (pdf)
+
+Let $X$ be a continuous random variable. The **probability density function of $X$** (pdf) is a function $f(x)$ such that for $a\leq b$,
+
+\[P(a\leq X\leq b)=\int_a^b f(x)\,dx.\]
+
+A couple of properties:
+
+1.  $f(x)\geq 0, x\in\mathbb R$
+1.  $\int_{-\infty}^{\infty}f(x)\,dx=1$
+1.  $P(X=c)=\int_c^c f(x)\,dx=0$
+
+##
+
+Example: A **uniform random variable** on $[a,b]$ is a model for "pick a random number between a and b." The pdf is given by
+
+\[f(x) = 
+  \begin{cases} 
+    \frac{1}{b-a}, & x\in[a,b] \\ 
+    0 & \text{otherwise}
+  \end{cases}.
+\]
+
+Example: Let $X$ be **normal random variable**. Then $X$ has the pdf given by
+
+\[f(x) = \frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{(x-\mu)^2}{2\sigma^2}}\]
+
+where $\mu$ and $\sigma^2$ are the mean and variance of $X$. These are properties of $X$ that we now discuss.
+
+## Mean and Variance
+
+Let $X$ be a random variable. The **mean** or **expected value** of $X$ is defined by
+
+\[\mathbb E(X)=
+  \begin{cases}
+    \displaystyle\sum_{x\in X(\mathcal S)}x\cdot p(x), & X \text{   discrete} \\
+    \displaystyle\int_{-\infty}^{\infty}x\cdot f(x)\, dx, & X \text{   continuous}
+  \end{cases}
+.\]
+
+The **variance** of $X$ is given by
+
+\[\mathbb V(X)=\mathbb E\left((X - \mathbb E(X))^2\right).\]
+
+The expected value is often denoted $\mu$ and the variance, $\sigma^2$. The square root of the variance, $\sigma$, is called the **standard deviation.** 
+
+## Highest density interval
+
+The mean gives us one way to quantify the central tendency of a distribution. Variance is one way to quantify the spread of a distribution. Another way to quantify the spread of a distribution is to specify the highest density interval (HDI). The 95% HDI for a distribution, for example, is an interval $I$ such that for $x\in I$, $f(x)>W$ for some fixed $W$ and
+
+\[\int_I f(x)\,dx = 0.95.\]
+
+## Using R to plot a normal random variable.
+
+A continuous probability distribution function $f$, as a function of random variable $x$ (Hence, $f(x)$), is created. The graph shows the pdf of a normal rv with mean 0 and standard deviation 0.2.
+
+```{r pdf-generation-function, fig.align='center', cache=TRUE}
+f <- function(x) (1 / sqrt(2 * pi * sig ^ 2)) * exp(-(x - mu) ^ 2 / 2 / sig ^ 2)
+dx <- 0.01
+x <- seq(-0.6, 0.6, by = dx)
+mu <- 0
+sig <- 0.2
+plot(x, f(x), type = "l")
+```
+
+##
+
+We can estimate the area under this curve. What should it be close to? Why?
+
+```{r}
+sum(f(x)[-1]*dx)
+```
+
+How much of the density is between $x=-0.2$ and $0.2$?
+
+```{r}
+sum(f(seq(-0.2, 0.2, by = dx))[-1]*dx)
+```
+
+## Distribution versus density function^[@teetor2011r]
+
+In general, a **distribution** function gives cumulative probability, $P(X \leq x)$, hence it is sometimes also referred to as cumulative probability function. A **density** function, however gives the exact probability of occurance of an event over given number of trials, where each trial has a certain probability of occurance associated with it.
+
+In R, variants of density functions are prefixed with "d", such as **d**binom, **d**geom, **d**pois and those of distribution functions are prefixed with "p", such as **p**binom, **p**geom, **p**pois.
+
+## Survival function
+
+The complement of the cumulative probability is called the **survival function**, $P(X > x)$. All of the distribution functions defined in R allow finding this right-tail probability simply by specifying `lower.tail = FALSE`.
+
+For example, in
+
+```{r survival-function}
+pbinom(7, size = 10, prob = 0.5, lower.tail = FALSE)
+```
+
+We see that the probability of observing $X > 7$ is about 0.055.
+
+## Interval probability
+
+The interval probability, $P(x_1 < X \leq x_2 )$, is the probability of observing X between the limits $x_1$ and $x_2$. It is simply calculated as the difference between two cumulative probabilities: $P(X \leq x_2 ) - P(X \leq x_1 )$. Here is $P(3 < X \leq 7)$ for our binomial variable:
+
+```{r interval-prob-long}
+pbinom(7, size = 10, prob = 0.5) - pbinom(3, size = 10, prob = 0.5)
+```
+
+R lets you specify multiple values of $x$ for these functions and will return a vector of the corresponding probabilities. Here we calculate two cumulative probabilities, $P(X \leq 3)$ and $P(X \leq 7)$, in one call to pbinom:
+
+```{r interval-prob-vector}
+pbinom(c(3, 7), size = 10, prob = 0.5)
+```
+
+##
+
+This leads to a one-liner for calculating interval probabilities. The `diff` function calculates the difference between successive elements of a vector. We apply it to the output of `pbinom` to obtain the difference in cumulative probabilities -- in other words, the interval probability:
+
+```{r interval-prob-vector-diff}
+diff(pbinom(c(3,7), size=10, prob=0.5))
+```
+
+# Discrete uniform distribution
+
+## Definition
+
+A r.v. $X$ is said to have a discrete uniform distribution over the range $[1, n]$ if its p.m.f is expressed as follows:
+
+\[
+P(X = x) =
+\begin{cases}
+\frac{1}{n} & \text{for}~ x = 1,2,..,n \\
+0, & \text{otherwise}
+\end{cases}
+\]
+
+
+# Bernoulli distribution
+
+## Definition
+
+A r.v. $X$ is said to have a Bernoulli distribution with parameter $p$ if its p.m.f is given by:
+
+\[
+P(X = x) =
+\begin{cases}
+p^x(1-p)^{1-x} & \text{for}~ x = 0,1 \\
+0, & \text{otherwise}
+\end{cases}
+\]
+
+## Definition simplified^[http://benalexkeen.com/discrete-probability-distributions-bernoulli-binomial-poisson/]
+
+A Bernouli Disribution is the probability distribution of a random variable which takes the value 1 with probability $p$ and value 0 with probability $1-p$, i.e.
+
+<!-- $$ -->
+<!-- \left\{ -->
+<!--   \begin{aligned} -->
+<!--   \begin{array}{ll} -->
+<!--   1- p & \textrm{for} & k = 0 \\ -->
+<!--   p & \textrm{for} & k = 1 -->
+<!--   \end{array} -->
+<!--   \end{aligned} -->
+<!-- \right\} -->
+<!-- $$ -->
+
+\[
+\begin{cases}
+1-p & \text{for } k = 0 \\
+p & \text{for } k = 1
+\end{cases}
+\]
+
+## Problem 1
+
+In a population, approximately 10% of the people are left-handed ($p = 0.1$). We want to know, out of a random sample of 10 people, what is the probability of 3 these 10 people being left handed ?
+
+We assign a 1 to each person if they are left handed and 0 otherwise:
+
+\[
+\begin{aligned}
+P(X = 1) &= 0.1 \\
+P(X = 0) &= 0.9
+\end{aligned}
+\]
+
+##
+
+A Binomial distribution is derived from the Bernoulli distribution. Let's start with a simpler problem.
+
+What is the probability of the first 3 people we pick being left-handed, followed by 7 people being right-handed ?
+
+This is given by: $0.1^3 \times 0.9^7$. Which is:
+
+```{r}
+round(0.1^3 * 0.9^7, 4)
+```
+
+What if we wanted the last 3 people to be left-handed ? This is given by: $0.9^7 \times 0.1^3$. This is same as previous.
+
+##
+
+The fact is it does not matter how we arrange the 3 people, we always have the same proability.
+
+So we have to add up all the ways we can arrange the 3 people being picked.
+
+There are $10!$ ways to arrange 10 people and there are $3!$ ways to arrange the 3 people that are picked and $7!$ ways to arrange the 7 that aren't picked.
+
+Thus ways in which 3 people being picked are picked is given by: $\frac{10!}{3!7!}$, which is:
+
+```{r}
+factorial(10)/(factorial(3)*factorial(7))
+```
+
+##
+
+This can be generalized to say that, "10 choose 3". The "n choose k" notation is written as:
+
+$$
+\binom{N}{k} = \frac{n!}{k!(n-1)!}
+$$
+
+We can now calculate the probability that there are 3 left-handed people in a random selection of 10 people as:
+
+$$
+P(X = 3) = \binom{10}{3}(0.1)^3(0.9)^7
+$$
+
+This equals `r (factorial(10)/(factorial(3)*factorial(7)))*0.1^3*0.9^7`.
+
+This expression of "n choose k" is implemented in r function `choose`.
+
+```{r}
+choose(10, 3)
+```
+
+##
+
+This can be further generalized as:
+
+$$
+P(X = k) = \binom{n}{k} (p)^k(1-p)^{n-k}
+$$
+
+This probability can be calculated using r's native `dbinom` function. This is also known as binomial density.
+
+```{r}
+dbinom(x = 3, size = 10, prob = 0.1)
+```
+
+##
+
+For obtaining different 0, 1, 2, 3 and 4 successful outcomes (left handed people) (assuming each have same frequency of occurance (10%) in the population), binomial density function approximation could be used as follows:
+
+```{r}
+dbin_df <- tibble(selection_of = 0:4, probability = dbinom(x = c(0:4), size = 10, prob = 0.1))
+dbin_df
+```
+
+##
+
+We could plot our probabilities for each values upto all 10 people being left-handed:
+
+```{r}
+ggplot(data = dbin_df, aes(x = selection_of, y = probability)) +
+  geom_col() +
+  labs(y = "P(X = Number of people being selected)", 
+       x = "Number of people being selected", 
+       title = "Binomial PMF")
+```
+
+We can see there is almost negligible chance of getting more than 6 left-handed people in a random group of 10 people.
+
+##
+
+The probability of obtaining either 0, 1, 2, 3 **or** 4 successes (left handed people) (it can be restated as: the probability of having less than 4 successes) in a random selection of 10 people, can be obtained by summing over the binomial density vector.
+
+```{r}
+sum(dbinom(x = c(0:4), size = 10, prob = 0.1))
+```
+
+This is same as calculating cumulative probability density using `pbinom` function.
+
+```{r}
+pbinom(q = 4, size = 10, prob = 0.1, lower.tail = TRUE)
+```
+
+The quantile is defined as the smallest value x such that $F(x) \geq p$, where F is the distribution function.
+
+## Problem 2
+
+On an American roulette wheel there are 38 squares:
+
+- 18 black
+- 18 red
+- 2 green
+
+We bet on black 5 times in a row, what are the chances of winning more than half of these ?
+
+##
+
+The problem can be formulated as:
+
+$$
+P(X > 5) = \sum{}^{10}_{i = 6}\binom{10}{i}\left( \frac{18}{38} \right)^i\left(1- \frac{18}{38} \right)^{n-i}
+$$
+
+##
+
+The probability value can be obtained by following r expression:
+
+```{r}
+p <- 18/38
+
+pbinom(10, 10, p) - pbinom(5, 10, p)
+```
+
+## Simulating bernoulli trial
+
+We can generate a sequence of 20 Bernoulli trials -- random successes or failures. We use TRUE to signify a success and FALSE otherwise.
+
+R could implement the simulation via `sample` function. By default, sample will choose equally among the set elements and so the probability of selecting either TRUE or FALSE is 0.5. With a Bernoulli trial, the probability p of success is not necessarily 0.5. You can bias the sample by using the prob argument of sample; this argument is a vector of probabilities, one for each set element. Suppose we want to generate 20 Bernoulli trials with a probability of success p = 0.8. We set the probability of FALSE to be 0.2 and the probability of TRUE to 0.8.
+
+```{r}
+sample(c(FALSE, TRUE), 20, replace = TRUE, prob = c(0.2, 0.8))
+```
+
+##
+
+The resulting sequence is clearly biased towards TRUE. This special case of a binary-valued sequence can be simulated using another built-in function `rbinom`, the random generator for binomial variates.
+
+```{r}
+as.logical(rbinom(20, 1, 0.8))
+```
+
+## Exact binomial test
+
+Note that exact probability of success in Bernoulli experiment is different from probability values for acceptance of hypothesis from exact test of a simple null. Like all other hypothesis testing, it requires sides of alternative be defined and (defaults to "two.sided") and confidence level be specified.
+
+##
+
+\small
+
+Under (the assumption of) simple Mendelian inheritance, a cross between plants of two particular genotypes produces progeny $\frac{1}{4}$ of which are "dwarf" and $\frac{3}{4}$ of which are "giant", respectively (@conover1980practical; p. 97f.)
+
+In an experiment to determine if this assumption is reasonable, a cross results in progeny having 243 dwarf and 682 giant plants.
+
+If "giant" is taken as success, the null hypothesis is that $p = \frac{3}{4}$ and the alternative that $p!= \frac{3}{4}$.
+
+```{r}
+binom.test(c(682, 243), p = 3/4)
+# binom.test(682, 682 + 243, p = 3/4)   # The same.
+```
+
+Data are in agreement with the null hypothesis.
+
+##
+
+Assuming data of P(probability values) and V(observation values) for a discrete probability distribution. Calculation of mean and variances of discrete probability distribution can be done as follows:
+
+```{r}
+probability_data <- tibble(probability = c(0.301, 0.176, 0.125, 0.097, 0.079, 0.067, 0.058, 0.051, 0.046),
+       values = seq(1:9))
+
+# the mean, variance and sd of a discrete probability distribution
+probability_data %>% 
+  summarise(probability_sum = sum(values*probability), 
+            probability_variance = sum(probability*(values-mean(values))^2), 
+            probability_sd = sqrt(probability_variance))
+```
+
+## 
+
+Let's make use of dataset about sales of car on a saturday by a car-salesman.
+
+```{r}
+saturday_sales <- read.csv("./data/carsold.csv", header = T)
+mu <- sum(saturday_sales$numsold * saturday_sales$prob)
+mu
+variance <- sum((saturday_sales$numsold-mu)^2 * saturday_sales$prob)
+variance
+
+tibble(numsold = saturday_sales$numsold, 
+       probability = (dbinom(saturday_sales$numsold, size = 5, prob = .5)))
+```
+
+##
+
+Probability of exactly 8 successes out of 10 times
+
+```{r}
+dbinom(8, size = 10, prob = 0.76)
+```
+
+Probability of successes 6 times or less.
+
+Question: why is the probability of success 6 times or less is smaller than individual probabilities? $\longrightarrow$ Because individual probability of success is high i.e., 0.76)
+
+```{r}
+sum(dbinom(c(1:6), size = 10, prob = 0.76))
+# pbinom(6, 10, 0.76) # same
+```
+
+Generate 100 sample of successes in times out of 10 trials with given probability of success
+
+```{r}
+randombinom <- rbinom(100, 10, 0.76)
+```
+
+##
+
+Having confidence limits below, we can say with 95% confidence that out of 10 trials between "lower confidence limit" successes and "uper confidence limit" successes will occur.
+
+```{r}
+quantile(randombinom, 0.025)# lower limit
+quantile(randombinom, 0.975)# upper limit
+```
+
+
+# Binomial distribution
+
+## Definition
+
+A r.v. $X$ is said to follow binomial distribution if it assumes only non-negative values and its p.m.f. is given by:
+
+\[
+P(X = x) = p(x) =
+\begin{cases}
+\binom{n}{x} p^xq^{n-x} & x = 0, 1, 2..., n; q = 1-p \\
+0, & \text{otherwise}
+\end{cases}
+\]
+
+##
+
+The assignment of probabilities in the definition of binomial distribution is permissible because,
+
+\[
+\sum^n_{x = 0} p(x) = \sum^n_{x = 0} \binom{n}{x} p^xq^{n-x} = (q + p)^n = 1
+\]
+
+##
+
+Let us suppose that $n$ trials constitute an experiment. Then, if this experiment is repeated $N$ times, the frequency function of the binomial distribution is given by:
+
+$$
+f(x) = Np(x) = N\sum^n_{x = 0} \binom{n}{x} p^xq^{n-x}; x = 0, 1, 2, ..., n
+$$
+and the expected frequencies of 0, 1, 2,..., n successes are the successive terms of a binomial expansion, $N (q + p)^n$, $q + p = 1$.
+
+## Binomial theorem
+
+\small
+
+We know the fact that,
+
+$$
+k\binom{n}k=\frac{kn!}{k!(n-k)!}=\frac{n!}{(k-1)!(n-k)!}=\frac{n(n-1)!}{(k-1)!(n-k)!}=n\binom{n-1}{k-1}\;:
+$$
+
+##
+
+So,
+
+$$
+\small
+\begin{aligned}
+\sum^n_{k=0}k\binom nkp^k(1-p)^{n-k}&=\sum_{k=0}^nn\binom{n-1}{k-1}p^k(1-p)^{n-k}\\
+&=n\sum_{k=0}^n\binom{n-1}{k-1}p^k(1-p)^{n-k}\\
+&=n\sum_{k=0}^{n-1}\binom{n-1}kp^{k+1}(1-p)^{n-k-1}\\
+&=np\sum_{k=0}^{n-1}\binom{n-1}kp^k(1-p)^{n-k-1}\\
+&=np\Big(p+(1-p)\Big)^{n-1}&&\text{binomial theorem}\\
+&=np\ .
+\end{aligned}
+$$
+
+## Physical/Experimental conditions for Binomial distribution
+
+1. Each trial results in two exhaustive and mutually disjoint outcomes, termed as success and failure.
+2. The number of trials 'n' is finite.
+3. The trials are independent of each other.
+4. The probability of success 'p' is constant in each trial.
+
+Note: The trials satisfying the conditions 1, 3 and 4 are also called **Bernoulli trials**.
+
+## Problem 1
+
+\small
+
+A coffee connoisseur claims that he can distinguish between a cup of instant coffee and a cup of percolator coffee 75% of the time. It is agreed that his claim will be accepted if he correctly identifies at least 5 of the 6 cups. Find his chances of having the claim (i) accepted, (ii) rejected, when he does have the ability he claims.
+
+##
+
+If $p$ denotes the probability of a correct distinction between a cup of instant coffee and a cup of percolator coffee, then we are given:
+
+$$
+p = \frac{75}{100} = \frac{3}{4} \implies q = 1-p = \frac{1}{4}, \text{and } n = 6
+$$
+
+If the random variable $X$ denotes the number of correct distinctions, then by the Binomial probability law, the probability of correct identification out of 6 cups is:
+
+\[
+P(X = x) = p(x) = \binom{6}{x} {\left(\frac{3}{4}\right)}^x {\left(\frac{1}{4}\right)}^{6-x};  x = 0, 1, 2, ..., 6
+\]
+
+##
+
+1. The probability of the claim being accepted is:
+
+$$
+\small
+P(X \geq 5) = p(5) + p(6) = \binom{6}{5} {\left(\frac{3}{4}\right)}^5 {\left(\frac{1}{4}\right)}^{6-5} 
++ 
+\binom{6}{6} {\left(\frac{3}{4}\right)}^6 {\left(\frac{1}{4}\right)}^{6-6}
+= 0.534
+$$
+
+2. The probability of claim being rejected is:
+
+$$
+\small
+P(X \leq 4) = 1 - P (X \geq 5) = 1-0.534 = 0.466
+$$
+
+## Problem 2
+
+In a binomial distribution consisting of 5 independent trials, probabilities of 1 and 2 successes are 0.4096 and 0.2048 respectively. Find the parameter 'p' of the distribution.
+
+##
+
+Let $X \sim B(n, p)$. In usual notations, we are given: $n = 5$, $p(1) = 0.4096$ and $p(2) = 0.2048$.
+
+According to Binomial probability law:
+
+$$
+P(X = x) = p(x) = \binom{5}{x}p^x (1-p)^{5-x}; x = 1, 2, ..., 5
+$$
+
+##
+
+Now, 
+
+$$
+\begin{aligned}
+p(1) &= \binom{5}{1} p(1-p)^4 &= 0.4096 & ... \text{ (expression 1) } \\ 
+p(2) &= \binom{5}{2} p^2(1-p)^3 &= 0.2048 & ... (\text{expression 2}).
+\end{aligned}
+$$
+
+Dividing (expression 1) by (expression 2), we get:
+
+$$
+\frac{\binom{5}{1} p(1-p)^4}{\binom{5}{2} p^2(1-p)^3} = \frac{0.4096}{0.2048} \implies \frac{5(1-p)}{10p} = 2 \implies p = \frac{1}{5} = 0.2
+$$
+
+##
+
+For a detailed discourse on:
+
+1. Moments of Binomial distribution
+2. Examples relating to moments of Binomial distribution
+3. Recurrence relation for the moments of Binomial distribution (Renovsky formula)
+4. Factorial momments of Binomial distribution
+5. Mean deviation about mean of Binomial distribution
+6. Mode of binomial distribution
+7. Moment generating function of Binomial distribution
+
+##
+
+8. Additive property of Binomial distribution
+9. Characteristic function of Binomial distribution
+10. Cumulants of the Binomial distribution
+11. Recurrance relation of cumulants of Binomial distribution
+12. Probability generating function of Binomial distribution
+13. Recurrence relation for the probabilities of Binomial distribution
+
+##
+
+Seven coins are tossed and number of heads noted. The experiment is repeated 128 times and the following distribution is obtained:
+
+```{r}
+coin_toss_bin <- tribble(~"Number of heads", ~"Frequencies", 
+       0, 7,
+       1, 6,
+       2, 19, 
+       3, 35, 
+       4, 30,
+       5, 23,
+       6, 7, 
+       7, 1)
+coin_toss_bin
+```
+
+Fit a binomial distribution distribution assuming, (i) The coin is unbiased (ii) The nature of the coin is not known. (iii) Probability of a head for four coins is 0.5 and for the remaining three coins is 0.45.
+
+##
+
+In fitting binomial distribution, first of all the mean and variance of the data are equated to np and npq respectively. Then the expected frequencies are calculated from these values of n and p. Here n = 7 and N = 128.
+
+**Case I**. When the coin is unbiased:
+
+$$
+\begin{aligned}
+&p = q &= \frac{1}{2} \implies \frac{p}{q} = 1 \\
+&p(0) = q^n &= \left(\frac{1}{2}\right)^7 = 128 \text{ so that } f(0) = Nq^n = 128\left(\frac{1}{2}\right)^7 = 1
+\end{aligned}
+$$
+
+## 
+
+Using the recurrence formula:
+
+$$
+p(x + 1) = \left\{\frac{n-x}{x+1}.\frac{p}{q}\right\} p(x)
+$$
+
+various probabilities, viz, $p(1), p(2), ...$ can be easily calculated as shown below:
+
+```{r}
+ctb <- coin_toss_bin %>% 
+  mutate(p = 1/2, 
+         q = 1/2) %>% 
+  rename(x = `Number of heads`,
+         f = Frequencies) %>% 
+  mutate("fx" = x*f, 
+         "exp1" = ((nrow(.)-1)-x)/(x+1), 
+         "exp2" = ((nrow(.)-1)-x)/(x+1), 
+         "exp3" = choose(nrow(.)-1, x)) %>% 
+  mutate_if(is.numeric, list(~round(., 2)))
+
+ctb_colnames <- c(colnames(ctb)[1:5], "$\\frac{n-x}{x+1}$", "$\\frac{n-x}{x+1}.\\frac{p}{q}$", "$\\text{Expected frequency} \\newline f(x) = Np(x)$")
+
+ctb %>% 
+  knitr::kable(booktabs = TRUE, escape = FALSE, col.names = ctb_colnames) %>% 
+  kableExtra::kable_styling(font_size = 6, position = "center")
+
+```
+
+##
+
+\small
+
+**Case II**. When the nature of coin is not known, then
+
+$$
+Mean = np = \bar{x} = \frac{1}{N}{\sum}^n_{i = 1}f_ix_i = \frac{433}{128} = 3.38; n = 7
+$$
+
+$$
+\therefore p = \frac{3.3828}{7} = 0.4826 \text{ and } q = 1-p = 0.51675, \implies \frac{p}{q} = 0.93521
+$$
+
+$$
+f(0) = Nq^7 = 128 (0.5167)^7 = 1.2593 \text{ (using logarithms)}
+$$
+
+```{r}
+# take only foremost columns
+
+ctb_prob_params <- ctb[,1:6] %>% 
+  summarise(ctb_mean = (sum(`fx`))/sum(`f`), 
+            ctb_p = ctb_mean/(nrow(ctb)-1), 
+            ctb_q = 1-ctb_p, 
+            ctb_p_by_q = ctb_p/ctb_q)
+
+ctb <- ctb[, 1:6] %>% 
+  mutate("exp2" = `exp1`* ctb_prob_params$ctb_p_by_q) %>% 
+  mutate(p = ctb_prob_params$ctb_p,
+         q = ctb_prob_params$ctb_q) %>% 
+  mutate("exp3" = cumprod(c(128 * (0.5167)^7, (`exp2`)[1:7]))) %>% 
+  mutate_if(is.numeric, list(~round(., 2)))
+
+ctb_colnames <- c(colnames(ctb)[1:5], "$\\frac{n-x}{x+1}$", "$\\frac{n-x}{x+1}.\\frac{p}{q}$", "$\\text{Expected frequency} \\newline f(x) = Np(x)$")
+
+ctb %>% 
+  kable(booktabs = TRUE, escape = FALSE, col.names = ctb_colnames) %>% 
+  kableExtra::kable_styling(position = "center", font_size = 6)
+```
+
+##
+
+The probability for generating function (p.g.f), say $P_X(s)$ for the 4 coins and $P_Y(s)$ for the remaining 3 coins are given by:
+
+$$
+\begin{aligned}
+P_X(s) &= (0.5 + 0.5 s)^4 \\ 
+P_Y(s) &= (0.55 + 0.45 s)^3
+\end{aligned}
+$$
+
+##
+
+Since all the throws are independent, the p.g.f $P_{X+Y}(s)$ for the whole experiment is given by:
+
+$$
+\begin{aligned}
+P_{X+Y}(s) &= P_{X}(s)P_{Y}(s) \\
+& = (0.50 + 0.50 s)^4 \times (0.55 + 0.45)^3 \\
+& = (0.0625 + 0.25 s + 0.375 s^2 + 0.25 s^3 + 0.0625 s^4) \times (0.166 + 0.408 s + 0.334 s^2 + 0.091 s^3)
+\end{aligned}
+$$
+
+##
+
+$$
+\begin{aligned}
+f(x) &= N \times \mathrm{ Coefficient~of~s^x~in~P_{X+Y}(s)} \\
+\therefore  f(0) &= 128 \times 0.0625 \times 0.16637 = 1.1331 \\
+f(1) &= 128 (0.25 + 0.166 + 0.4084 \times 0.0625) = 8.5910 \\
+f(2) &= 128(0.284) = 36.347 \\
+f(3) &= 128(0.184) = 23.567 \\
+f(4) &= 128(0.261) = 33.353 \\
+f(5) &= 128(0.146) = 18.693 \\
+f(6) &= 128(0.044) = 5.589 \\
+f(7) &= 128(0.006) = 0.729 
+\end{aligned}
+$$
+
+##
+
+These frequencies, rounded to the nearest integer, keeping in minid that total frequency is N = 128, are given below:
+
+```{r}
+tribble(~"x", ~"f", 
+        0, 1,
+        1, 9, 
+        2, 36,
+        3, 23,
+        4, 33,
+        5, 19,
+        6, 6,
+        7, 1) %>% 
+  knitr::kable(booktabs = TRUE) %>% 
+  kableExtra::kable_styling(position = "center")
+```
+
+# Bibliography
+
+## Further study
+
+Also see: @gupta2002fundamentals
+
+## References
