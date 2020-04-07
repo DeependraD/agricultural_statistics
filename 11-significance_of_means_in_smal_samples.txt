@@ -1,0 +1,17 @@
+# Significance of means in small samples (t-test)
+
+## One sample
+
+## Two samples
+
+## Two related sample means test (paired t-test)
+
+## Test for correlation coefficient
+
+## F-test
+
+## Chi-square test
+
+### Test of independence
+
+### Test of goodness of fit

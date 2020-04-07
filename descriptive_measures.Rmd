@@ -1,0 +1,55 @@
+---
+title: Descriptive measures
+author: Deependra Dhakal
+date: August, 2019
+institute: |
+  | \textit{ddhakal.rookie@gmail.com}
+  | \url{https://rookie.rbind.io}
+output: 
+  binb::metropolis:
+    includes:
+      in_header: beamer_header_template.tex
+classoption: "aspectratio=169" # "compressed"
+fontsize: 11pt
+bibliography: [./../bibliographies.bib]
+---
+
+```{r,setup, include=FALSE}
+library(knitr)
+require(tidyverse)
+set.seed(453)
+# invalidate cache when the package version changes
+knitr::opts_chunk$set(tidy = FALSE, echo = FALSE, 
+                  message = FALSE, warning = FALSE,
+                  out.width = "45%", cache = TRUE)
+options(knitr.table.format = "latex")
+options(knitr.kable.NA = "", digits = 2)
+options(kableExtra.latex.load_packages = FALSE)
+theme_set(theme_bw())
+```
+
+# Quantitative data
+
+In a mass, quantitative data show following characteristics:
+
+1. They show a tendency to concentrate at certain values, usually somewhere in centre of the distribution. Measures of this tendency are called measures of central tendency or averages.
+
+2. The data vary about a measure of central tendency and these measures of deviation are called measures of *variation* or *dispersion*.
+
+3. The data in a frequency distribution may fall into symmetrical or asymmetrical patterns. The measures of the direction and degree of asymmetry are called measures of *skewness*.
+
+4. Polygons of frequency distributions exhibit flatness or peakedness of frequency curves. The measures of peakedness or flatness of the frequency curves are called measures of *kurtosis*.
+
+## Frequency distribution
+
+When observations of either discrete or continuous nature are available on a single characteristic of a large number of individuals, often it becomes necessary to condense the data as far as possible without losing any information. Let us consider the marks in a subject obtained by 300 candidates selected at random among those appearing a certain examination.
+
+```{r uniform-dist-std, echo=FALSE}
+students_marks <- runif(300, 32, 99) %>% enframe(name = "student", value = "marks")
+
+students_marks$marks %>% 
+  matrix(nrow = 30) %>% 
+  as_tibble() %>% 
+  rename()
+```
+

@@ -1,0 +1,5 @@
+# Regression
+
+## Regression equations of y on x and x on y
+
+## Relation between correlation coefficient and regression coefficient

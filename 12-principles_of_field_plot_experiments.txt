@@ -1,0 +1,15 @@
+# Principles of field plot experiments
+
+## Replication
+
+## Randomization
+
+## Local control
+
+## One way analysis of variance (Completely randomized design)
+
+## Two way analysis of variance (Randomized complete block design)
+
+## Three way analysis of variance (Latin square design)
+
+## Factorial experiments

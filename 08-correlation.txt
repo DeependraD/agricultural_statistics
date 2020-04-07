@@ -1,0 +1,25 @@
+# Correlation
+
+## Meaning and definition
+
+- Suppose we have a sample of n pairs for which each pair represents the measurement of two variables, X and Y. If a scatterplot of Y versus X shows a general linear trend, then it is natural to try to describe the strength of the linear association.
+
+- The systematic interrelationship between the two continuous related variables say, X and Y is termed as correlation. When only two variables are involved, the correlation is called simple correlation. If more than two variables are involved, the correlation is said to be multiple correlation.
+
+- When the variables move in the same direction, i.e., increase in one variable causes and increase in other variable and vice versa, such type of correlation is called positive/direct correlation. In general, grain yield of wheat and the number of grains per spike are positively correlated. 
+
+- By analogy, negative correlation is said to occur when increase in one variable is followed by decrease in other. For example, grain yield of wheat and severity of disease in the field are negatively correlated.
+
+## Scatter diagram
+
+- Scatterplot of positive correlation
+- Scatterplot of negative correlation
+- Scatterplot of dinosaur correlation
+
+## Mathematical representation of correlation
+
+
+
+## Karl pearson's coefficient of correlation (linear correlation)
+
+## Correlation coefficient for bivariate frequency distribution

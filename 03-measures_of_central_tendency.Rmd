@@ -1,0 +1,27 @@
+# Measures of central tendency
+
+Frequency density
+
+
+
+## Arithmetic mean
+
+## Median
+
+## Mode
+
+## Merits and cons of centra tendency measures
+
+## Uses of measures of central tendency
+
+## Properties of ideal measure of centra tendency
+
+## Partition values
+
+### Quartiles
+
+### Deciles
+
+### Percentiles
+
+### Quantile

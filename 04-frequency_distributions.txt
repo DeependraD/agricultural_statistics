@@ -1,0 +1,19 @@
+# Frequency distribution
+
+## Presentation and summarization of data by different classification methods
+
+### Exhaustive
+
+### Inclusive
+
+### Diagrammatic
+
+- Bar
+- Pie
+
+### Graphical methods
+
+- Histogram
+- Frequency polygon
+- Frequency curve
+- Ogives (cumulative frequency curves)
