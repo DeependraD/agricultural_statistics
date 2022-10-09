@@ -3,8 +3,10 @@ title: Discrete probability distributions I
 author:   
   - Deependra Dhakal 
 institute:   
+  - Assistant Professor
+  - Agriculture and Forestry University
   - \url{https://rookie.rbind.io}
-date: August, 2019
+# date: August, 2019
 output:   
   beamer_presentation:  
     incremental: false  

@@ -1,0 +1,137 @@
+---
+title: Principles of field plot experiments
+author:   
+  - Deependra Dhakal 
+institute:   
+  - Assistant Professor
+  - Agriculture and Forestry University
+  - \url{https://rookie.rbind.io}
+# date: August, 2019
+output:   
+  beamer_presentation:  
+    incremental: false  
+    theme: "Frankfurt"  
+    colortheme: "beaver"  
+    toc: true   
+    slide_level: 2
+    keep_tex: true
+    includes:
+      in_header: beamer_header.tex
+classoption: "aspectratio=169"
+header-includes: 
+- \usepackage{enumitem}
+- \usepackage{booktabs,siunitx}
+- \usepackage{longtable}
+- \usepackage{array}
+- \usepackage{multirow}
+- \usepackage{wrapfig}
+- \usepackage{float}
+- \usepackage{colortbl}
+- \usepackage{pdflscape}
+- \usepackage{tabu}
+- \usepackage{threeparttable}
+- \usepackage{threeparttablex}
+- \usepackage{xcolor}
+- \usepackage{tikz}
+- \usepackage[skip=0.333\baselineskip]{caption}
+- \setbeamerfont{caption}{size=\tiny}
+- \setbeamertemplate{footline}[page number]
+- \AtBeginSection{}
+- \AtBeginSubsection{}
+- \renewcommand\floatpagefraction{.9}
+- \renewcommand\topfraction{.9}
+- \renewcommand\bottomfraction{.9}
+- \renewcommand\textfraction{.1}   
+- \setcounter{totalnumber}{50}
+- \setcounter{topnumber}{50}
+- \setcounter{bottomnumber}{50}
+- \setlist[itemize,1]{leftmargin=2pt,itemindent=2pt}
+- \setlist[itemize,2]{leftmargin=6pt,itemindent=2pt}
+- \def\labelitemi{$\bullet$}
+- \def\labelitemii{$\diamond$}
+- \def\labelitemiii{\textbullet}
+bibliography: [./bibliographies.bib]
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+require(tidyverse)
+set.seed(453)
+# invalidate cache when the package version changes
+knitr::opts_chunk$set(tidy = FALSE, echo = FALSE, 
+                  message = FALSE, warning = FALSE,
+                  out.width = "45%")
+options(knitr.table.format = "latex")
+options(knitr.kable.NA = "", digits = 2)
+options(kableExtra.latex.load_packages = FALSE)
+
+# set penalty for using scientific notation at 10, and number of digits to use in notation to 10
+options(scipen = 30, digits = 15)
+
+theme_set(theme_bw())
+```
+
+# Principles of field plot experiments
+
+## Replication
+
+- The repetition of experimental conditions so that the effects of interest can be estimated with greater precision and the associated variability can be estimated.
+- Experiments make use of replication when they contain multiple \alert{trials} that are executed under circumstances that are nominally^[Refers to the degree of experimental control that can actually be exerted in the study] identical.
+- Within this degree of attainable control, replication effectively reduces the random variation or noise in the comparisons examined in the analysis, and provides an opportunity to estimate the typical size of this random component in individual measurements.
+
+##
+
+- "replication" versus "repeated measurements."
+  - For example, suppose four subjects are each assigned to a drug and a measurement is taken on each subject. The result is four independent observations on the drug. This is "replication." On the other hand, if one subject is assigned to a drug and then measured four times, the measurements are not independent. We call them "repeated measurements."
+  - variation in repeated measurements taken at the same time reflects the variation in the measurement process, 
+  - variation in repeated measurements taken over a time interval reflects the variation in the single subject’s response to the drug over time.
+
+## Blocking 
+
+\footnotesize
+- If a potential source of systematic variation is known, the experiment can sometimes be designed in blocks to minimize its effect.
+- Experiment involves the application of treatments to experimental units to assess the effects of the treatments on some response.
+- The "\alert{experimental units}," which may be subjects, materials, conditions, points in time, or some combination of these, will be variable and induce variation in the response. Such variation in experimental units may be intentional, as the experimental conditions under which an experiment is run should be representative of those to which the conclusions of the experiment are to be applied.
+- For inferences to be broad in scope, the experimental conditions should be appropriately varied.
+- In this regard, blocking^[Blocking an experiment involves dividing, or partitioning, the experimental units into groups called blocks in such a way that the experimental units in each block are intended to be relatively similar, so that treatments assigned to experimental units in the same block can be compared under relatively similar experimental conditions.] mainly serves two purpose: 
+  \begin{itemize}
+  \scriptsize
+  \item Control and adjust for some of the variation in experimental units, hence increase the precision by grouping together a set of experimental units that are more or less homogeneous.
+  \item Increase convenience, to allow different sizes of experimental units, link an insurance policy against disturbances that may or may not arise during the course of an experiment.
+  \end{itemize}
+  
+## Randomization
+
+- The purpose of randomization is to prevent *systematic and personal biases* from being introduced into the experiment by the experimenter.
+
+<!-- A random assignment of subjects or experimental material to treatments prior to the start of the experiment ensures that observations that are favored or adversely affected by unknown sources of variation are observations "selected in the luck of the draw" and not systematically selected. -->
+
+- Lack of a random assignment of experimental material or subjects leaves the experimental procedure open to \alert{experimenter bias}.
+  - a horticulturist may assign his or her favorite variety of experimental crop to the parts of the field that look the most fertile,
+  - a medical practitioner may assign his or her preferred drug to the patients most likely to respond well.
+- The preferred variety or drug may then appear to give better results no matter how good or bad it actually is.
+
+##
+
+- Consider an experiment to compare the effects on blood pressure of three exercise programs, where each program is observed four times, giving a total of 12 observations. Now, given 12 subjects, imagine making a list of all possible assignments of the 12 subjects to the three exercise programs so that 4 subjects are assigned to each program. (There are $\frac{12!}{(4!4!4!)}$, or 34,650 ways to do this.) If the assignment of subjects to programs is done in such a way that every possible assignment has the same chance of occurring, then the assignment is said to be a completely random assignment.
+- A random assignment in experimental design is achieved through a random number generator or a random number table.
+
+<!-- A random number generator is a computer program that gives as output a very long string of digits that are integers between 0 and 9 inclusive and that have the following properties. All integers between 0 and 9 occur approximately the same number of times, as do all pairs of integers, all triples, and so on. Furthermore, there is no discernible pattern in the string of digits, and hence the name "random" numbers. -->
+- The most common random number generators on computers or calculators generate n-digit real numbers between zero and one. Single digit random numbers can be obtained from an n-digit real number by reading the first digit after the decimal point. Pairs of digits can be obtained by reading the first two digits after the decimal point, and so on.
+
+## Comparison and local control
+
+\small
+- Experiments are controlled so as to isolate the differences between the treatments of interest, and to minimize extraneous variability so as to enable the sharpest possible statistical analyses (e.g., narrow confidence intervals or powerful tests).
+\scriptsize
+- In many instances, this high degree of control means that the data collected are actually representative of only a very special situation, reflecting the particular laboratory procedures, batch of experimental material, et cetera, used in the performance of the experiment. As a result, meaningful inferences usually need to be based on comparisons within an experiment, with the idea that anything unusual, but common, to all trials in the experiment will "cancel out" in the analysis.
+\small
+- "Comparison" often leads to the inclusion of one or more experimental controls.
+  - For example, in addition to the four carefully defined "experimental treatments", while evaluating pipeline varieties, one or two "locally adapted" cultivars are included so as to provide a comparison to what might have happened in a "normal" scenario or how would the "local check" perform in controlled experimental conditions.
+- A large difference between responses form these treatment and "checks" could indicate unanticipated influences of the experimental procedure _per se_; a small or negligible difference might be viewed as support for the investigators' intent that "checks" are a reasonable representation for genotypes suited to the target environment.
+
+<!-- In an experiment involving the growth of cell cultures in response to hormone exposure, the control might consist of cultures grown without the addition of any hormones, while the more interesting cultures would be grown in the presence of one or more hormones at specified concentrations. Control and comparison are two experimental devices used to reduce sources of variability that are uninteresting or irrelevant in the context of the questions being asked. -->
+
+# Bibliography
+
+## References

@@ -1,0 +1,754 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  ignorenonframetext,
+  aspectratio=169]{beamer}
+\title{Introduction to Statistics, Sampling and other Vocabularies}
+\author{Deependra Dhakal}
+\date{}
+\institute{Assistant Professor \and Agriculture and Forestry
+University \and \url{https://rookie.rbind.io}}
+
+\usepackage{pgfpages}
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{caption label separator}{: }
+\setbeamercolor{caption name}{fg=normal text.fg}
+\beamertemplatenavigationsymbolsempty
+% Prevent slide breaks in the middle of a paragraph
+\widowpenalties 1 10000
+\raggedbottom
+\setbeamertemplate{part page}{
+  \centering
+  \begin{beamercolorbox}[sep=16pt,center]{part title}
+    \usebeamerfont{part title}\insertpart\par
+  \end{beamercolorbox}
+}
+\setbeamertemplate{section page}{
+  \centering
+  \begin{beamercolorbox}[sep=12pt,center]{part title}
+    \usebeamerfont{section title}\insertsection\par
+  \end{beamercolorbox}
+}
+\setbeamertemplate{subsection page}{
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center]{part title}
+    \usebeamerfont{subsection title}\insertsubsection\par
+  \end{beamercolorbox}
+}
+\AtBeginPart{
+  \frame{\partpage}
+}
+\AtBeginSection{
+  \ifbibliography
+  \else
+    \frame{\sectionpage}
+  \fi
+}
+\AtBeginSubsection{
+  \frame{\subsectionpage}
+}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usetheme[]{Frankfurt}
+\usecolortheme{beaver}
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Introduction to Statistics, Sampling and other Vocabularies},
+  pdfauthor={Deependra Dhakal},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\newif\ifbibliography
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+
+\usepackage[shortlabels]{enumitem}
+\usepackage{booktabs,siunitx}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{caption}
+\captionsetup[table]{skip=0pt}
+\captionsetup[table]{belowskip=-2pt}
+\setbeamerfont{caption}{size=\tiny}
+\setbeamertemplate{footline}[page number]
+\AtBeginSection{}
+\AtBeginSubsection{}
+\renewcommand\floatpagefraction{.9}
+\renewcommand\topfraction{.9}
+\renewcommand\bottomfraction{.9}
+\renewcommand\textfraction{.1}
+\usetikzlibrary{mindmap}
+\setcounter{totalnumber}{50}
+\setcounter{topnumber}{50}
+\setcounter{bottomnumber}{50}
+\setlist[itemize,1]{leftmargin=2pt,itemindent=2pt}
+\setlist[itemize,2]{leftmargin=6pt,itemindent=2pt}
+\def\labelitemi{$\bullet$}
+\def\labelitemii{$\diamond$}
+\def\labelitemiii{\textbullet}
+\definecolor{darkgreen}{rgb}{0.01,0.96,0.03}
+\definecolor{black}{rgb}{0.01,0.001,0.01}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\begin{document}
+\frame{\titlepage}
+
+\begin{frame}[allowframebreaks]
+  \tableofcontents[hideallsubsections]
+\end{frame}
+\hypertarget{statistics-origin-and-meaning}{%
+\section{Statistics: Origin and
+Meaning}\label{statistics-origin-and-meaning}}
+
+\begin{frame}{Meaning}
+\protect\hypertarget{meaning}{}
+\begin{itemize}
+\tightlist
+\item
+  Statistics must have started as a state arithmetic to assist a rural
+  who neeeded to know the wealth and numbers of other properties in
+  order to levy tax.
+\item
+  Gambling as games of chance to the theory of probability about the
+  middle of seventh century.
+\item
+  Statistical principles involve certain logical patterns, methods of
+  reasoning and critical thinking. Using the logical reasoning we draw
+  conclusions based on incomplete information about a phenomenon. The
+  Theory of Probability is used for this purpose. Thus there is a
+  linkage between probability theory and statistical principles.
+\item
+  A branch of mathematics dealing with the collection, analysis,
+  interpretation, and presentation of masses of numerical data (Merriam
+  webster)
+\item
+  In statistics, a single value has no meaning. At least two
+  observations must be needed for statistical analysis. The statistics
+  deals with group of individuals -- populations -- not a single object.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{}
+\protect\hypertarget{section}{}
+\begin{block}{Definition}
+Statistics can be defined as the body of concepts, examples and methods dealing with collection, summarization, analysis and interpretation of data. -- R. Rangaswamy, 1995
+
+
+Statistics is the science, pure and applied, of developing and applying the techniques to deal with quantitative and qualitative information, such that uncertainity of inductive inference may be evaluatated. -- Steel and Torrie, 1960.
+\end{block}
+\end{frame}
+
+\begin{frame}{Branches of statistics}
+\protect\hypertarget{branches-of-statistics}{}
+\begin{itemize}
+\tightlist
+\item
+  Organizing and summarizing data is called \textbf{descriptive}
+  statistics.
+\item
+  Two ways to summarize data are by graphing and by using numbers (for
+  example, finding an average).
+\item
+  After you have studied probability and probability distributions, you
+  will use formal methods for drawing conclusions from ``good''data. The
+  formal methods are called \textbf{inferential} statistics.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Aims of statistics}
+\protect\hypertarget{aims-of-statistics}{}
+\begin{itemize}
+\tightlist
+\item
+  To study population
+\item
+  To quantify the variation and study its causes; and
+\item
+  To study the methods of summarizing/reduction data
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Scope of statistics}
+\protect\hypertarget{scope-of-statistics}{}
+\small
+
+\begin{itemize}
+\tightlist
+\item
+  Historically, kings and chiefs of states were using statistics in
+  framing suitable military and fiscal policies, imposing taxes and
+  maintaining law and order for the welfare of state.
+\item
+  Vast governmental statistical activities are in operation for
+  collection and dissemination of data such as national population
+  census, economic affairs, national production, input-output accounts,
+  balance payments, measures of past trends, current status and future
+  projections.
+\item
+  These days statistical methodology is employed by investigators in
+  virtually all disciplines, including such areas as:
+
+  \begin{itemize}
+  \footnotesize
+  \item business enterprises (production/purchase planning, marketing and quality control decision making)
+  \item molecular biology (analysis of microarray data)
+  \item ecology (describing quantitatively how individuals in various animal and plant populations are spatially distributed)
+  \item materials engineering (studying properties of various treatments to retard corrosion) marketing (developing market surveys and strategies for marketing new products)
+  \item public health (identifying sources of diseases and ways to treat them) 
+  \item civil engineering (assessing the effects of stress on structural elements and the impacts of traffic flows on communities)
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Limitations of statistics}
+\protect\hypertarget{limitations-of-statistics}{}
+\begin{itemize}
+\tightlist
+\item
+  Statistics does not deal with an individual
+\item
+  It does not study qualitative characters
+\item
+  It does not reveal the entire story
+\item
+  It is true only on an average
+\item
+  It is liable to be misused, and
+\item
+  Statistical theories can be applied only when there is variability in
+  the experimental materials.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Steps/procedures in statistics}
+\protect\hypertarget{stepsprocedures-in-statistics}{}
+\begin{itemize}
+\tightlist
+\item
+  Collection of the data: From primary and secondary source.
+\item
+  Organization/presentation of data: It is based on,
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Classification: Process by which the individual item of any data are
+    arranged in different groups or classes according to resemblances
+    and similarities in relation to any variable characters. e.g.,
+    diagrams, pictures and graphs.
+  \item
+    Tabulation: The process by which the classified data are presented
+    in an orderly manner by being placed in proper rows and columns of a
+    table in order to bring out their chief characteristics and
+    essential features.
+  \end{itemize}
+\item
+  Analysis of data: Includes but not limited to measures of central
+  tendency and measures of variation.
+\item
+  Interpretation of the analysed data.
+\end{itemize}
+\end{frame}
+
+\hypertarget{data}{%
+\section{Data}\label{data}}
+
+\begin{frame}{}
+\protect\hypertarget{section-1}{}
+\begin{itemize}
+\small
+\item \alert{Statistics}
+  \begin{itemize}
+  \footnotesize
+  \item the practice or science of collecting and analysing numerical data in large quantities, especially for the purpose of inferring proportions in a whole from those in a representative sample.
+  \item According to statistics compiled by NoC, average gas prices in Nepal topped out in July at NRs. 180 per liter.
+  \end{itemize}
+\item Data (singular: \textit{datum})
+  \begin{itemize}
+  \footnotesize
+  \item coding or representation of existing information or knowledge in some form suitable for processing.
+  \item the quantities, characters, or symbols on which operations are performed by a computer, which may be stored and transmitted in the form of electrical signals and recorded on magnetic, optical, or mechanical recording media.
+  \end{itemize}
+\item Data types
+  \begin{itemize}
+  \footnotesize
+  \item Categorical
+    \begin{itemize}
+    \scriptsize
+    \item Nominal
+    \item Ordinal
+    \end{itemize}
+  \item Quantitative: Show tendency to concentrate at certain values, usually somewhere in centre of the distribution (called measures of central tendency). The data varies about a measure of central tendency (called measures of \textit{variation} or \textit{dispersion}). The measures of the direction and degree of asymmetry of data in frequency distribution are called measures of \textit{skewness}. Also exhibit flatness or peakedness of frequency curves (called measures of \textit{kurtosis}).
+    \begin{itemize}
+    \scriptsize
+    \item Discrete
+    \item Continuous
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Based on the method of collection}
+\protect\hypertarget{based-on-the-method-of-collection}{}
+\begin{itemize}
+\tightlist
+\item
+  Primary data: Data are collected from the field by investigator
+  himself directly.
+\item
+  Secondary data: Secondary data are the data that already exist. The
+  researcher or investigator obtain them form various sources such as
+  through mail, middle man, reports and publications.
+\end{itemize}
+\end{frame}
+
+\hypertarget{population-and-sample}{%
+\section{Population and sample}\label{population-and-sample}}
+
+\begin{frame}{}
+\protect\hypertarget{section-2}{}
+\begin{itemize}
+\tightlist
+\item
+  A \alert{\textit{unit}} is usually a concrete or physical thing for
+  which we would like to measure its characteristics.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    in medical and social sciences -- human beings
+  \item
+    in industry -- products
+  \item
+    in marketing -- sales
+  \item
+    in experimental field -- \ldots{}
+  \end{itemize}
+\item
+  The complete set of units that we would like to say something about is
+  called the (target) \alert{population}.
+\item
+  The set of units for which we have obtained data is referred to as the
+  \alert{sample}.
+\end{itemize}
+
+\footnotesize
+\renewcommand{\labelitemi}{$\diamond$}
+
+\begin{itemize}
+\tightlist
+\item
+  The population is the complete collection of subjects whose study is
+  of interest.
+\item
+  \textbf{Population} refers to an aggregate of individual possessing
+  the specified characteristics.
+\item
+  A sample is a part of the population of interest, a subset selected by
+  some means from the population.
+\item
+  The sample is drawn from the population systematically or randomly.
+  The size of the sample is denoted by ``n'' and the size of populaiton
+  is denoted by ``N.'' Every small part of a population is not a sample;
+  only the part that is scientifically selected is known as sample.
+  Individuals comprising a sample must be chosen unbiased.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{}
+\protect\hypertarget{section-3}{}
+\begin{tikzpicture}
+  \path[mindmap, concept color=darkgreen, text=white]
+  node[concept] {Demonstration plots of Rice varieties for Hill ecology} [clockwise from=180]
+  child[concept color=darkgreen!50, black] {
+    node[concept] {Variety 1, Variety 2, Variety 3}
+  }
+  child[concept color=darkgreen!70!blue, black] {
+    node[concept] {Variety 3, Variety 4, Variety 8}
+  }
+  child[concept color=darkgreen!70!orange, black] {
+    node[concept] {Variety 4, Variety 5, Variety 7}
+  }
+  child[concept color=darkgreen!70!purple, black] {
+    node[concept] {Variety 2, Variety 1, Variety 8}
+  };
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}{}
+\protect\hypertarget{section-4}{}
+\begin{center}\includegraphics[width=0.8\linewidth]{./images/population_vs_sample} \end{center}
+\end{frame}
+
+\begin{frame}{}
+\protect\hypertarget{section-5}{}
+\begin{itemize}
+\small
+\item A \alert{parameter} is a numerical value that describes a characteristic of a population, while a \alert{statistic} is a numerical measurement that describes a characteristic of a sample.
+\item Before gathering data, we first consider the scope of our study by identifying the population. The population consists of all subjects/animals/specimens/plants, and so on, of interest.
+  \begin{itemize}
+  \footnotesize
+  \item All poplar trees in Tikapur
+  \item All people in Nepal with the height above 155 cm
+  \end{itemize}
+\item Typically, we are unable to observe the entire population; therefore, we must be content with gathering data from a subset of the population, a sample of size $n$. From this sample we make inference about the population as a whole.
+\item Note the difference between biological meaning of individual sample (specimen) and the same term used in statistics.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Variables}
+\protect\hypertarget{variables}{}
+\begin{itemize}
+\tightlist
+\item
+  A quantitative and qualitative characteristic that varies from
+  observation/unit to observation/unit in the same group is called
+  variables.
+\item
+  Conventionally, the qualitative variables are termed as variables and
+  quantitative variables are termed as attributes.
+\item
+  \textbf{Continuous variables}: The variables for which fractional
+  measurements are possible are termed as continuous variables. For
+  example, In the range of 5 kgs-6 kgs yield of crop, the actual yield
+  might be 5.12 or 5.43 kgs.
+\item
+  \textbf{Discrete/Discontinuous variables}: The variables for which
+  fractional measurements are not possible are called as
+  discrete/discontinuous variables. For example, the number of grains
+  per panicle of paddy can be counted in full numbers only like 80, 81,
+  82, etc. Discrete variables can futher be classified into nominal and
+  ordinal types. Nominal variables cannot be measured numerically, e.g.,
+  education, sex, honesty, etc. Ordinal variables can be numerically
+  ordered. e.g., height as tall, medium and dwarf.
+\item
+  The variables, continuous or discrete are denoted by capital letters
+  like ``X'' and ``Y.''
+\end{itemize}
+\end{frame}
+
+\begin{frame}{}
+\protect\hypertarget{section-6}{}
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Variate}: Each individual figure is known as variate, that
+  varies from individual to individual.
+\item
+  \textbf{Variants}: An individual observation or value of any variable
+  is known as variants.
+\item
+  \textbf{Accurate}: Very close to the population parameter.
+\item
+  \textbf{Precise}: It is the higher degree of repeatablility.
+\item
+  \textbf{Statistic}: A value calculated from a sample to estimate a
+  population parameter is called as statistic.
+\item
+  \textbf{Deviation}: The difference between the observation and the
+  mean, i.e., between two values.
+\end{itemize}
+\end{frame}
+
+\hypertarget{samping-methods}{%
+\section{Samping methods}\label{samping-methods}}
+
+\begin{frame}{}
+\protect\hypertarget{section-7}{}
+\begin{itemize}
+\tightlist
+\item
+  Refer to kaptein textbook (Statistics for Data Scientists)
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Simple random sampling}
+\protect\hypertarget{simple-random-sampling}{}
+\begin{columns}[T,onlytextwidth]
+\column{0.7\textwidth}
+\begin{itemize}
+\small
+\item A simple random sample of $n$ items is a sample in which 
+  \begin{itemize}
+  \small
+  \item every number of the population has the same chance of being included in the sample, and 
+  \item the members of the sample are chosen independently of each other.
+  \end{itemize}
+\item Second requirement means that the chance of a given member of the population being chosen does not depend on which other members are chosen.
+\end{itemize}
+
+\footnotesize
+For example, suppose you want to select a sample of size $n = 2$ from a population containing $N = 4$ objects. If the four objects are identified by the symbols $x_1, x_2, x_3$ and $x_4$, there are six distinct pairs that could be selected, as listed in Table \ref{tab:srs-sample-space}. If the sample of $n = 2$ observations is selected so that each of these six samples has the same chance of selection, given by $\frac{1}{6}$, then the resulting sample is called a simple random sample, or just a random sample.
+
+\column{0.3\textwidth}
+
+\begin{table}
+
+\caption{\label{tab:srs-sample-space}Sample combinations of $n=2$ from a population containing $N=4$}
+\centering
+\fontsize{7}{9}\selectfont
+\begin{tabular}[t]{rl}
+\toprule
+Sample & Observations in sample\\
+\midrule
+1 & $x_1$ $x_2$\\
+2 & $x_1$ $x_3$\\
+3 & $x_1$ $x_4$\\
+4 & $x_2$ $x_3$\\
+5 & $x_2$ $x_4$\\
+\addlinespace
+6 & $x_3$ $x_4$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\end{columns}
+\end{frame}
+
+\begin{frame}{Example Problem}
+\protect\hypertarget{example-problem}{}
+A population contains 50,000 voters. Use the random number table to
+identify the voters to be included in a random sample of \(n=15\).
+\end{frame}
+
+\begin{frame}{Probability proportional to size sampling}
+\protect\hypertarget{probability-proportional-to-size-sampling}{}
+In probability proportional to size sampling the selection probability
+for each element is set to be proportional to its size measure, up to a
+maximum of 1.
+
+Example: Suppose we have six schools with populations of 150, 180, 200,
+220, 260, and 490 students respectively (total 1500 students), and we
+want to use student population as the basis for a PPS sample of size
+three. To do this, we could allocate the first school numbers 1 to 150,
+the second school 151 to 330 (= 150 + 180), the third school 331 to 530,
+and so on to the last school (1011 to 1500). We then generate a random
+start between 1 and 500 (equal to 1500/3) and count through the school
+populations by multiples of 500. If our random start was 137, we would
+select the schools which have been allocated numbers 137, 637, and 1137,
+i.e.~the first, fourth, and sixth schools.
+
+The PPS approach can improve accuracy for a given sample size by
+concentrating sample on large elements that have the greatest impact on
+population estimates.
+\end{frame}
+
+\begin{frame}{Stratified random sampling}
+\protect\hypertarget{stratified-random-sampling}{}
+When the population consists of two or more subpopulations, called
+strata, a sampling plan that ensures that each subpopulation is
+represented in the sample is called a \textbf{stratified} random sample.
+
+National polls usually involve some form of stratified random sampling
+with states as strata, and state polls involve sampling technique using
+districts or municipalities as strata.
+\end{frame}
+
+\begin{frame}{Systematic sampling}
+\protect\hypertarget{systematic-sampling}{}
+Sometimes the population to be sampled is ordered, such as an
+alphabetized list of people with driver's licenses, a list of utility
+users arranged by service addresses, or a list of customers by account
+numbers. In these and other situations, one element is chosen at random
+from the first k elements, and then every k-th element thereafter is
+included in the sample. This comprises a \textbf{1-in-k systematic
+random sample}.
+\end{frame}
+
+\begin{frame}{Cluster sampling}
+\protect\hypertarget{cluster-sampling}{}
+When the available sampling units are group of elements, random sampling
+performed on such units comprise a culstered sampling. For example, a
+household is a cluster of individuals living together. When a particular
+cluster is included in the sample, a census of every element in the
+cluster is taken.
+
+\begin{center}\includegraphics[width=0.45\linewidth]{./images/cluster_sampling} \end{center}
+\end{frame}
+
+\begin{frame}{Multistage sampling}
+\protect\hypertarget{multistage-sampling}{}
+\end{frame}
+
+\begin{frame}{Sampling error}
+\protect\hypertarget{sampling-error}{}
+\end{frame}
+
+\hypertarget{sampling-in-agricultural-research}{%
+\section{Sampling in agricultural
+research}\label{sampling-in-agricultural-research}}
+
+\begin{frame}{}
+\protect\hypertarget{section-8}{}
+An experiment with 30 indigenous and exotic collections/cultivars of
+garden pea was conducted at Division of Vegetable crops, IARI, New Delhi
+during 1998. There were approximately 300 plants per plot. The
+characters observed were the day of appearance of first flower, first
+flowering node number, length of internodes, the day of 50\% flowering,
+the day of first green pod harvest, number of primary branches, the
+length of pod, plant height, etc. It was not possible to take
+observation on 300 plants for each character. For convenience, the
+measurements were made only from 10 plants out of 300 plants in each of
+the plots for characters mentioned above.
+
+One may also count tiller numbers only 1 msq of the 15 msq plot, for
+leaf area, measure from only 20 of the approximately 2000 leaves in the
+plot, etc.
+\end{frame}
+
+\begin{frame}{}
+\protect\hypertarget{section-9}{}
+For \emph{plot sampling} (selection of some plants from a plot), number
+of plants in each plot is a population. The character under study is
+estimated from some selected plants. The selected plants are known as a
+sample. An appropriate sample is one that provides an estimate, or a
+sample value, that is as close as possible to the value that would have
+been obtained had all plant in the plot been measured -- the plot value.
+The difference between the sample value and the plot value constitutes
+the sampling error.
+
+To develop a plot sampling technique for measurement of a character in a
+given trial, we must specify the sampling unit, the sample size, and the
+sampling design.
+\end{frame}
+
+\begin{frame}{}
+\protect\hypertarget{section-10}{}
+The sampling unit is the unit on which actual measurement is made. Some
+commonly used sampling units in a replicated field trial are a leaf, a
+plant, a group of plants, a unit area etc.
+
+The number of sampling units taken from the population is known as
+sample size. The required sample size for a particular experiment is
+governed by:
+
+\begin{enumerate}
+[i.]
+\tightlist
+\item
+  The size of the variability among sampling units within the same plot
+  (sampling variance).
+\item
+  The degree of precision desired for the character of interest.
+\end{enumerate}
+
+In practice, the size of the sampling variance for most plant characters
+is generally not known. However, its value can be estimated or assumed
+to be known. The desired level of precision can, however, be prescribed
+by the researcher based on experimental objective and previous
+experience, in terms of the marign of error, either of the plot mean or
+of the treatment mean.
+\end{frame}
+
+\begin{frame}{}
+\protect\hypertarget{section-11}{}
+The sample size for a simple random sampling design that can satisfy a
+prescribed margin of error of the plot mean is computed as:
+
+\[
+n = \frac{Z_{\alpha/2}^2 \times v_s}{d^2 \times \bar{X}^2}
+\]
+
+Where, n is the required sample size, \(Z_{\alpha/2}\) is the value of
+the standardized normal variate corresponding to level of significance
+\(\alpha\), \(v_s\) is the sampling variance, \(\bar{X}\) is the mean
+value, and d is the margin of error expressed as a fraction of the plot
+mean.
+\end{frame}
+
+\begin{frame}{}
+\protect\hypertarget{section-12}{}
+\footnotesize
+
+The information of primary interest to the researcher is usually the
+treatment means (the average over all plots receiving the same
+treatment) or actually the difference of means, rather than plot mean
+(the value from a single plot). Thus, the desired degree of precision is
+usually specified in terms of the margin of error of the treatment mean
+rather than that of the plot mean. In such a case, sample size is
+computed as:
+
+\[
+n = \frac{Z_{\alpha/2}^2 v_s}{r D^2 \bar{X^2} - Z_{\alpha/2}^2 v_p}
+\]
+
+Where, n is the required sample size, r is the number of replications,
+\(Z_{\alpha/2}\) and \(v_s\) are as defined earlier, \(v_p\) is the
+variance between plots of the same treatment (i.e.~experimental error),
+and D is the prescribed margin of error expressed as a fraction of the
+treatment mean. In this case, additional information on the size of the
+experimental error (\(v_p\)) is needed to compute the sample size.
+
+A sampling design specifies the manner in which the \(n\) sampling units
+are to be selected from the whole plot. Most commonly used sampling
+designs in replicated field trials are detailed herein.
+\end{frame}
+
+\begin{frame}{General practices in sampling}
+\protect\hypertarget{general-practices-in-sampling}{}
+Precision of a sample estimate generally increases with the size of the
+sampling unit, sample size, and the complexity of the sampling design
+used. However, an increase in either the size or the number of sampling
+units always increases the cost. Therefore, a proper balance has to be
+maintained between the size of the sampling unit, sample size and a
+sampling design on one hand and the cost at the other. This requires the
+information on the variability of the character of interest so that the
+precision that will result from the various types of sampling techniques
+can be estimated. There are three sources of the data from which the
+required information can be obtained: i. from previous trials, ii.
+additional data from ongoing experiments, or iii. specifically planned
+sampling studies.
+\end{frame}
+
+\hypertarget{bibliography}{%
+\section{Bibliography}\label{bibliography}}
+
+\begin{frame}{References}
+\protect\hypertarget{references}{}
+\end{frame}
+
+\end{document}

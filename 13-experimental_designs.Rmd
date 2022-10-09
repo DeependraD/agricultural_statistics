@@ -1,0 +1,510 @@
+---
+title: Experimental designs
+author:   
+  - Deependra Dhakal 
+institute:   
+  - Assistant Professor
+  - Agriculture and Forestry University
+  - \url{https://rookie.rbind.io}
+# date: August, 2019
+output:   
+  beamer_presentation:  
+    incremental: false  
+    theme: "Frankfurt"  
+    colortheme: "beaver"  
+    toc: true   
+    slide_level: 2
+    keep_tex: true
+    includes:
+      in_header: beamer_header.tex
+classoption: "aspectratio=169"
+header-includes: 
+- \usepackage{enumitem}
+- \usepackage{booktabs,siunitx}
+- \usepackage{longtable}
+- \usepackage{array}
+- \usepackage{multirow}
+- \usepackage{wrapfig}
+- \usepackage{float}
+- \usepackage{colortbl}
+- \usepackage{pdflscape}
+- \usepackage{tabu}
+- \usepackage{threeparttable}
+- \usepackage{threeparttablex}
+- \usepackage{xcolor}
+- \usepackage{tikz}
+- \usepackage[skip=0.333\baselineskip]{caption}
+- \setbeamerfont{caption}{size=\tiny}
+- \setbeamertemplate{footline}[page number]
+- \AtBeginSection{}
+- \AtBeginSubsection{}
+- \renewcommand\floatpagefraction{.9}
+- \renewcommand\topfraction{.9}
+- \renewcommand\bottomfraction{.9}
+- \renewcommand\textfraction{.1}   
+- \setcounter{totalnumber}{50}
+- \setcounter{topnumber}{50}
+- \setcounter{bottomnumber}{50}
+- \setlist[itemize,1]{leftmargin=2pt,itemindent=2pt}
+- \setlist[itemize,2]{leftmargin=6pt,itemindent=2pt}
+- \def\labelitemi{$\bullet$}
+- \def\labelitemii{$\diamond$}
+- \def\labelitemiii{\textbullet}
+bibliography: [./bibliographies.bib]
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+require(tidyverse)
+require(agricolae)
+set.seed(453)
+# invalidate cache when the package version changes
+knitr::opts_chunk$set(tidy = FALSE, echo = FALSE, 
+                  message = FALSE, warning = FALSE,
+                  out.width = "45%")
+options(knitr.table.format = "latex")
+options(knitr.kable.NA = "", digits = 2)
+options(kableExtra.latex.load_packages = FALSE)
+
+# set penalty for using scientific notation at 10, and number of digits to use in notation to 10
+options(scipen = 30, digits = 15)
+
+theme_set(theme_bw())
+```
+
+# CRD (One way ANOVA)
+
+## Completely Randomized Design (One way Analysis of Variance)
+
+\small
+- Involves selection of random samples from each of k different levels corresponding to the k populations, also the _treatments_ for this one-way classification. This design involves only one factor, the population from which the measurement comes -- hence the designation as a one-way classification.
+- To find out whether the difference exists among the $k$ population means, or not, the analysis of variance procedure provides one overall test to judge the equality of the k population means.
+- A researcher is interested in the effects of five types of insecticides for use in controlling the boll weevil in cotton fields. Explain how to implement a completely randomized design to investigate the effects of the five insecticides on crop yield.
+  \begin{itemize}
+  \footnotesize
+  \item The only way to generate the equivalent of five random samples from the hypothetical populations corresponding to the five insecticides is to use a method called a randomized assignment.
+  \item A fixed number of cotton plants are chosen for treatment, and each is assigned a random number. Suppose that each sample is to have an equal number of measurements. Using a randomization device, you can assign the first n plants chosen to receive insecticide 1, the second n plants to receive insecticide 2, and so on, until all five treatments have been assigned.
+  \end{itemize}
+
+##
+
+\small
+Suppose there are $k$ population means, $\mu_1, \mu_2, ..., \mu_k$, based on independent random samples of size $n_1, n_2, ..., n_k$ from normal populations with a common variance $\sigma^2$. That is, each of the normal populations has the same shape, but their locations might be different.
+
+Let $x_{ij}$ be the jth measurement ($j = 1, 2, ..., n_i$) in the ith sample. The analysis of variance procedure begins by considering the total variation in the experiment, which is measured by a quantity called the total sum of square (TSS):
+
+Total SS = $\sum (x_ij - \bar{x})^2$ = $\sum x^2_{ij} - \frac{(\sum x_{ij})^2}{n}$
+
+The first part of above expression gives the sample variance of the entire set of $n = n_1 + n_2 + ... + n_k$ measurements. The second part of the calculation is called the correction factor (CF). If we let G represent the grand total of all n obervations, then
+
+$$
+CF = \frac{(\sum x_{ij})^2}{n} = \frac{G^2}{n}
+$$
+
+##
+
+\small
+The Total SS is partitioned into two components. The first component, called the sum of squares for treatments (SST), measures the variation among the k sample means:
+
+$$
+SST = \sum n_i (\bar{x}_i - \bar{x})^2 = \sum \frac{T^2_i}{n_i} - CF
+$$
+
+where $T_i$ is the total of the observations for treatment $i$. The second component, called the sum of squares for error (SSE), is used to measure the pooled variation within the $k$ samples:
+
+$$
+SSE = (n_1 - 1)s_1^2 + (n_2 - 1)s_2^2 + ... + (n_k - 1)s_k^2
+$$
+This formula is a direct extension of the numerator in the formula for the pooled estimate of $\sigma^2$.
+
+## Pooled estimate of variance
+
+\small
+The population variance $\sigma^2$ describes the shape of the normal distributions from which your samples come, so that either $s_1^2$ or $s_2^2$ would give you an estimate of $\sigma^2$ . But why use just one when information is provided by both? A better procedure is to combine the information in both sample variances using a weighted average, in which the weights are determined by the relative amount of information (the number of measurements) in each sample. For example, if the first sample contained twice as many measurements as the second, you might consider giving the first sample variance twice as much weight. To achieve this result, use this formula:
+
+$$
+s^2 = \frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2}
+$$
+
+We can show algebraically that, in the analysis of variance,
+
+Total SS = SST + SSE
+
+Therefore, only one of the two sums of squares may be calculated and the third can be found by subtraction.
+
+##
+
+\small
+Each of the sources of variation, when divided by its appropriate degree of freedom, provides an estimate of the variation in the experiment. Since Total SS involves n squared observations, its degree of freedom are $df = (n - 1)$. Similarly, the sum of squares for treatments involves $k$ squared observations, and its degree of freedom are $df = k - 1$. Finally, the sum of squares for error, a direct extension of the pooled estimated, has
+
+$$
+\small
+df = (n_1 - 1) + (n_2 - 1) + ... + (n_k - 1) = n - k
+$$
+Notice that the degrees of freedom for treatments and errors are additive -- that is, $df(\text{total}) = df(\text{treatments}) + df (\text{error})$.
+
+##
+
+These two sources of variation and their respective degrees of freedom are combined to form the mean square as $MS = SS/df$. The total variation in the experiment is then displayed in an analysis of variance (or ANOVA) table.
+
+```{r anova-crd-template}
+tribble(
+  ~"Sources of variation", ~"Degree of freedom", ~"Sum of squares (SS)", ~"Mean square (MS)", ~"Expected mean square (MS)", 
+  "Treatments", "$t-1$", "$r \\sum_i (\\bar{y}_i - \\bar{y})^2 = SS(T)$", "$MS(T) = \\frac{SS(T)}{(t-1)}$", "$\\sigma_e^2 + \\frac{r}{t-1} \\sum_{i = 1}^t \\tau_i^2$", 
+  "Error", "$t(r-1)$", "$\\sum_{i,j} (y_{ij} - \\bar{y}_i)^2 = SS(E)$", "$MS(E) = \\frac{SS(E)}{t(r-1)}$", "$\\sigma_e^2$"
+) %>% 
+  knitr::kable(escape = FALSE, booktabs = TRUE) %>% 
+  kableExtra::kable_styling(font_size = 8) %>% 
+  kableExtra::column_spec(1:5, width = c("6em", "5em", "8em", "6em", "8em"))
+```
+
+
+# RCBD (Two way ANOVA)
+
+## Randomized Complete Block Design (Two way Analysis of Variance)
+
+Consider an experimental situation in which $v$ treatments are to be compared via $N = vr$ experimental units (plots) arranged in r blocks each of size v such that each treatment occurs exactly once in each block, i.e., the experiment is conducted using a randomized complete block design. Let $n$ plants be selected from each plot and observations are made from $n$ selected plants. The response variable can be represented by a linear, additive, fixed effect model as,
+
+$$
+Y_{ijt} = \mu + \tau_i + \beta_j + e_{ij} + \eta_{ijt}
+$$
+
+Where $Y_{ijt}$ is the observation pertaining to the t-th sampling unit for the i-th treatment in the j-th blck ($i = 1, 2, \ldots, v$, $j = 1, 2, \ldots, r$; $t = 1, 2, \ldots, n$), $\mu$ is the general mean effect; $\tau_i$ is the i-th treatment effect, $\beta_j$ is the effect of j-th block, $e_{ij}$ is the plot error distributed as $N(0, \sigma_e^2)$, $\eta_{ijt}$ is the sampling error distributed as $N(0, \sigma_s^2)$.
+
+##
+
+The analysis of variance (ANOVA) for such a design is given in \ref{tab:anova-rcbd-template}.
+
+```{r anova-rcbd-template}
+tribble(
+  ~"Sources of variation", ~"Degree of freedom", ~"Sum of squares (SS)", ~"Mean square (MS)", ~"Expected mean square (MS)", 
+  "Blocks", "$r - 1$", "SSB", NA, NA, 
+  "Treatments", "$v-1$", "SST", NA, "$\\sigma_s^2 + n \\sigma_e^2 + \\frac{rn}{v-1} \\sum_{i = 1}^v \\tau_i^2$", 
+  "Treatments x Blocks (experimental error)", "$(v-1)(r-1)$", "SSBT", "MSBT", "$\\sigma_s^2 + n \\sigma_e^2$", 
+  "Sampling error", "$rv(n-1)$", "SSSE", "MSSE", "$\\sigma_s^2$"
+) %>%
+  knitr::kable(escape = FALSE, booktabs = TRUE, caption = "ANOVA table for RCB designs") %>% 
+  kableExtra::kable_styling(font_size = 8) %>% 
+  kableExtra::column_spec(column = 1:5, width = c("6em", "5em", "5em", "5em", "8em"))
+```
+
+##
+
+```{r rcbd-example1, fig.cap="Layout of 2x3 factorial RCBD in randomized experimental layout", out.width="55%", fig.width=7, fig.height=5, message=FALSE}
+
+trt_list <- list(c("SRI", "Conventional"), c("Basal", "Basal + Single \nTopdressed", "Basal + Double \nTopdressed"))
+two_three_rcbd <- design.ab(trt = c(2,3), r = 3,
+          serie = 2, seed = 2,
+          kinds = "Super-Duper", first = TRUE,
+          randomization = TRUE, design = "rcbd")
+
+fa_labels <- tribble(
+  ~"A", ~"factor_tillage",
+  1, "SRI",
+  2, "Conventional"
+) %>% 
+  mutate(A = as_factor(A))
+
+fb_labels <- tribble(
+  ~"B", ~"factor_dressing",
+  1, "Basal",
+  2, "Basal + Single \nTopdressed",
+  3, "Basal + Double \nTopdressed"
+) %>%
+  mutate(B = as_factor(B))
+
+two_three_rcbd_df <- two_three_rcbd$book %>% 
+  as_tibble() %>% 
+  left_join(fb_labels) %>% 
+  left_join(fa_labels) %>% 
+  select(-A, -B) %>% 
+  unite("tillage_dressing", factor_dressing, factor_tillage, remove = FALSE, sep = ", ") %>% 
+  group_split(block)
+
+myplots <- lapply(two_three_rcbd_df, function(x){
+  p1 <- ggplot(x, aes(plots, block, fill = `tillage_dressing`)) +
+    geom_tile(colour="white", size=1.5, stat="identity") +
+    scale_fill_discrete(c = 90, l = 95) +
+    geom_text(aes(plots, block, label = tillage_dressing),
+                             color="black", size=rel(3)) +
+    labs(title=paste0("Replication ", unique(x$block)),
+         x = NULL, y = NULL) +
+    coord_flip() +
+    theme_bw() +
+    theme(legend.position="none") + # removes all legend
+    theme(axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          axis.text.x = element_blank(),
+          axis.ticks = element_blank(),
+          plot.title = element_text(color = "darkblue", size = 10, hjust = 0.5))
+}
+)
+
+two_three_rcbd_gg <- do.call(gridExtra::grid.arrange,c(myplots, ncol=3))
+
+# two_three_rcbd_gg
+
+# ggsave("./rice_rcbd_afu_2079.png",
+#        plot = two_three_rcbd_gg,
+#        width = 8, height = 6, units = "in", dpi = 250)
+
+```
+
+##
+
+\small
+The sum of squares due to different components of ANOVA can be obtained as follows:
+
+Form a $r \times v$ two-way table between blocks and treatments, each cell figure being the total overall samples from a plot.
+
+```{r two-way-block-treatment}
+tribble(
+  ~"Blocks", ~"1", ~"2", ~"i", ~"v", ~"Block totals",
+  "1", "$T_{11}$", "$T_{21}$", "$T_{i1}$", "$T_{v1}$", "$B_{.1}$", 
+  "2", "$T_{12}$", "$T_{22}$", "$T_{i2}$", "$T_{v2}$", "$B_{.2}$", 
+  ".", ".", ".", ".", ".", ".", 
+  "j", "$T_{1j}$", "$T_{2j}$", "$T_{ij}$", "$T_{vj}$", "$B_{.j}$", 
+  ".", ".", ".", ".", ".", ".", 
+  "r", "$T_{1r}$", "$T_{2r}$", "$T_{ir}$", "$T_{vr}$", "$B_{.r}$", 
+) %>% 
+  knitr::kable(booktabs = TRUE, caption = "Two way tabulation of block and treatment observations.", escape = FALSE) %>% 
+  kableExtra::kable_styling(font_size = 8)
+
+```
+
+##
+
+\small
+The sum of squares (S.S) due to different components of ANOVA can be obtained as follows:
+
+Grand Total (GT) = $\sum_{i = 1}^v \sum_{j = 1}^r \sum_{t = 1}^n y_{ijt}$
+
+Correction factor (CF) = $\frac{GT^2}{rvn}$
+
+Total SS of the table (TSS) = $\large \frac{\sum_{i = 1}^v \sum_{j = 1}^r \sum_{t = 1}^n y_{ijt}^2}{n} - CF$
+
+$T_i$ = i-th treatment total = $\sum_{j = 1}^r \sum_{t = 1}^n y_{ijt}$
+
+$B_i$ = j-th block total = $\sum_{i = 1}^v \sum_{t = 1}^n y_{ijt}$
+
+Treatment SS (SST) = $\large \frac{\sum_{i = 1}^v T_i^2}{nv} - CF$
+
+Block SS (SSB) = $\large \frac{\sum_{j = 1}^r B_j^2}{nv} - CF$
+
+Block x Treatment SS (SSBT) = TSS - SST - SSB
+
+Total SS of the entire data = $\sum_{i = 1}^v \sum_{j = 1}^r \sum_{t = 1}^n y_{ijt}^2 - CF$
+
+Sum of squares due to the sampling error (SSSE) = Total SS of the entire data - SSB - SST - SSBT
+
+##
+
+\small
+Using the expression of expected mean squares in the above ANOVA Table (\ref{tab:anova-rcbd-template}), it is clear that the null hypothesis regarding the equality of treatment effects is tested against the experimental error. From the ANOVA, it is also clear that the sampling error is estimated as
+
+$\hat{\sigma_s}^2 = s_2^2$.
+
+The experimental error (variance between plots of the same treatment) is estimated as $\large \hat{\sigma}_e^2 = \frac{s_1^2 - s_2^2}{n}$. When $\hat{\sigma}_e^2$ is negative, it is taken as zero.
+
+The variance of the i-th treatment mean ($\bar{Y}_i$) based on r-replications and n-samples per plot = ${\large \frac{\sigma_s^2 + n \sigma_e^2}{rn}}$
+
+The estimated variance of $\large \bar{Y}_{i..} = \frac{\hat{\sigma}_s^2 + n\hat{\sigma}_e^2}{rn}$.
+
+Taking the number of sampling units in a plot to be large (infinite), the estimated variance of a treatment mean when there is complete recording (i.e., the entire plot is harvested) = $\large \frac{\hat{\sigma}_e^2}{r}$
+
+##
+
+\small
+The efficiency of sampling as compared to complete enumeration:
+
+$$
+\frac{\frac{\hat{\sigma}_e^2}{r}}{\frac{\hat{\sigma}_s^2 + n \hat{\sigma}_e^2}{rn}}
+$$
+
+The standard error of a treatment mean $\bar{Y}_{i...}$ with n samples per plot and r replication is
+
+$$
+\small
+\left[ \frac{\hat{\sigma}_s^2}{rn} + \frac{\hat{\sigma}_e^2}{r} \right]^{\frac{1}{2}}
+$$
+
+The coefficient of variation is
+
+$$
+\small 
+p = \frac{\left[ \frac{\hat{\sigma}_s^2}{rn} + \frac{\hat{\sigma}_e^2}{r} \right]^{\frac{1}{2}}}{\bar{Y}_{i...}} \times 100
+$$
+
+Thus, $n$ can be found by re-arranging the above expression.
+
+##
+
+Generally, the margin of error (d or D) is $Z_{\alpha/2}$ times the value of coefficient of variation of $\bar{Y}_{i...}$ based on the concept of $100(1-\alpha)\%$, confidence intervals. Therefore,
+
+$$
+n = \frac{\hat{\sigma}_s^2}{r} \left[\frac{Z_{\alpha/2}^2}{D^2 (\bar{Y}_i)^2 - Z_{\alpha/2}^2 \frac{\hat{\sigma}_e^2}{r}} \right]
+$$
+
+For any given $r$ and $p(D)$, there will be $t$ values for $n$ corresponding to the $t$ treatment means. The maximum $n$ will ensure the estimation of any treatment mean with a standard error not exceeding $p$ percent or margin of error not exceeding $D$.
+
+For an example to accompany theory of analyzing RCB design, refer to http://apps.iasri.res.in/ebook/EBADAT/2-Basic%20Statistical%20Techniques/22-plotsamp-final.pdf .
+
+# Split plot design
+
+## Split plot design
+
+Design was developed and first used for agricultural, mainly agronomic experiments.
+
+When we have two treatment factors $A$ and $B$, with levels $a_1, a_2, ..., a_a$ and $b_1, b_2, ..., b_b$, respectively. Factor $A$ is referred to as the whole-plot-factor and the EUs to which the levels of A are applied are the whole-plots. Factor $B$ is the split-plot factor and the EUs to which the level of $B$ are applied are the split-plots, each whole-plot having b split-plots as illustrated below for $b = 4$
+
+```{r split-plot-component, fig.width=4, fig.height=0.8, out.width="60%", fig.align='center'}
+b <- 4
+crossing(whole_plot = 1, split_plots = 1:4) %>% 
+  mutate_all(function(x)as_factor(x)) %>% 
+  ggplot(aes(x = split_plots, y = whole_plot)) +
+  geom_tile(aes(fill = split_plots), size=1.5, stat="identity", 
+            show.legend = FALSE) +
+  scale_fill_discrete(c = 90, l = 95) +
+  geom_text(aes(split_plots, whole_plot, label = split_plots), 
+              color="black", size=rel(4.5)) +
+  theme_bw() +
+  labs(x = "Split plots", y = "Main plot") +
+  theme(axis.text = element_blank(),
+        axis.ticks = element_blank())
+```
+
+A replicate consists then of one application of each level $a_1, a_2, ..., a_a$ and within each of the $a$ whole-plots of one application of each level $b_1, b_2, ..., b_b$. And the design consists then of r such replications.
+
+##
+
+
+```{r split-plot-example1, fig.cap="Layout of Split plot design with main (Tillage operation) and sub (Fertilizer application) plot factors in randomized experimental layout", out.width="55%", fig.width=7, fig.height=5}
+
+treat_main <- c("SRI", "Conventional")
+treat_sub <- c("Basal", "Basal + First topdressing", "Basal + Two topdressing")
+
+split_book <- design.split(treat_main, treat_sub, r = 3, design = "rcbd", serie = 2, seed = 0,
+                           kinds = "Super-Duper", first = TRUE, randomization = TRUE)$book %>% 
+  unite("tillage_dressing", treat_main, treat_sub, remove = FALSE, sep = ", ") %>% 
+  mutate_at(c("plots", "splots", "block", "tillage_dressing"), as_factor) %>% 
+  mutate(tillage_dressing = str_wrap(tillage_dressing, width = 10))
+
+split_block_df <- group_split(split_book, block)
+
+myplots <- lapply(split_block_df, function(x){
+  p1 <- ggplot(x, aes(plots, splots, fill = `tillage_dressing`)) +
+    geom_tile(colour="white", size=1.5, stat="identity") +
+    scale_fill_discrete(c = 90, l = 95) +
+    # ggrepel::geom_label_repel(aes(plots, splots, label = tillage_dressing), force = 0.25, nudge_x = 0.15,
+    #           color="black", label.size=rel(0.3),
+    #           direction = "y",
+    #           arrow = NULL
+    #           ) +
+    geom_label(aes(plots, splots, label = tillage_dressing),
+                              color="black", label.size=rel(0.3)) +
+    labs(title=paste0("Replication ", unique(x$block)),
+         x = NULL, y = NULL) +
+    # coord_flip() +
+    theme_bw() +
+    theme(legend.position="none") + # removes all legend
+    theme(axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          axis.text.x = element_blank(),
+          axis.ticks = element_blank(),
+          plot.title = element_text(color = "darkblue", size = 10, hjust = 0.5))
+}
+)
+
+two_three_split_gg <- do.call(gridExtra::grid.arrange,c(myplots, ncol=3))
+
+# two_three_split_gg
+
+# ggsave("./rice_split_rcbd_afu_2079.png",
+#        plot = two_three_rcbd_gg,
+#        width = 8, height = 6, units = "in", dpi = 250)
+
+```
+
+##
+
+\small
+It is useful to think of this arrangement as superimposing one RCBD on top of another RCBD. For the first RCBD, involving the whole-plots and the whole-plot factor, we have
+
+$$
+\mathrm{RCBD_A}: t = a, \text{number of blocks} = r
+$$
+and for the second RCBD, involving the split-plots and split-plot factor, we have
+
+$$
+\mathrm{RCBD_B}: t = b, \text{number of blocks} = ra
+$$
+This brings out the fact that two independent randomizations are being used.
+
+##
+
+\small
+Assuming no replicate x B interaction (since we are assuming unit-treatment additivity), we then have the complete partitioning of the d.f. as given in the ANOVA of Table \ref{tab:anova-split-plot}.
+
+```{r anova-split-plot}
+
+# to add: E(MS)
+tribble(
+  ~Source, ~df,  ~ SS, 
+  "Replicates", "$(r-1)$", "$ab \\sum_i{(\\bar{y}_{i..} - \\bar{y})^2} = SS(R)$",
+  "A-factor", "$(a-1)$", "$rb \\sum_j{(\\bar{y}_{.j.} - \\bar{y})^2} = SS(A)$",
+  "Error (A)", "$(r-1)(a-1)$", "$b \\sum_{i, j}{(\\bar{y}_{ij.}- \\bar{y}_{i..}- \\bar{y}_{.j.}+ \\bar{y}_{...})^2} = SS(E_A)$",
+  "B-factor", "$(b-1)$", "$ra \\sum_k{(\\bar{y}_{..k} - \\bar{y}_{...})^2} = SS(B)$",
+  "A x B", "$(a-1)(b-1)$", "$r \\sum_{j, k}{(\\bar{y}_{.jk}- \\bar{y}_{.j.}- \\bar{y}_{..k}+ \\bar{y}_{...})^2} = SS(A \\times B)$",
+  "Error(B)", "$(r-1)a(b-1)$", "$\\sum_{ijk}{(y_{ijk} - \\bar{y}_{ij.} - \\bar{y}_{.jk} + \\bar{y}_{.j.})^2} = SS(E_B)$",
+  "Total", "$rab-1$", "$\\sum_{i,j,k}{(y_{ijk} - \\bar{y}_{...})^2}$"
+) %>% 
+  knitr::kable(booktabs = TRUE, escape = FALSE, caption = "ANOVA table for Split plot designs", longtable = TRUE) %>% 
+  kableExtra::kable_styling(font_size = 8)
+```
+
+
+# Three way ANOVA
+
+## Latin Square Design
+
+## Split-split-plot design
+
+For a 5 x 3 x 3 factorial design, replicated 3 times, ANOVA of split-split-plot is shown in Table \ref{tab:anova-split-split-plot}.
+
+
+```{r anova-split-split-plot}
+
+# incomplete...complete from note copy
+tribble(
+  ~"Source of variation", ~"df", ~"SS", ~"MSS",
+  "Mainplot", NA, NA, NA,
+  "Replication (R)", "$(r-1) = 3-1 = 2$", NA, NA,
+  "Main-plot factor (A)", "$(a-1) = 3-1 = 2$", NA, NA,
+  "Error (a)", "$(r-1)(a-1) = 8$", NA, NA,
+  "Subplot", NA, NA, NA,
+  "Subplot factor (B)", "$(b-1) = 2$", NA, NA,
+  "A x B", "$(a-1)(b-1) = 8$", NA, NA,
+  "Error(b)", "$a(r-1)(b-1) = 20$", NA, NA,
+  "Sub-sub plot", NA, NA, NA,
+  "Sub-sub plot factor (C)", "$(c-1) = 2$", NA, NA,
+  "A x C", "$(a-1)(c-1) = 8$", NA, NA,
+  "B x C", "$(b-1)(c-1) = 4$", NA, NA,
+  "A x B x C", "$(a-1)(b-1)(c-1) = 16$", NA, NA,
+  "Error (c)", "$ab(r-1)(c-1) = 60$", NA, NA,
+  "Total", "$rabc-1 = 134$", NA, NA
+) %>% 
+  knitr::kable(booktabs = TRUE, caption = "ANOVA table for split split plot designs", escape = FALSE, longtable = TRUE) %>% 
+  kableExtra::kable_styling(font_size = 8) %>% 
+  kableExtra::add_indent(c(2:4, 6:8, 10:14))
+
+```
+
+(task: Figure out how to draw design! hint: agricolae contains a dataset and analysis function for `ssp.plot`).
+
+# Factorial experiments
+
+##
+
+# Bibliography
+
+## References
