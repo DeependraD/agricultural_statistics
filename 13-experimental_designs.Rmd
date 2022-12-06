@@ -6,7 +6,6 @@ institute:
   - Assistant Professor
   - Agriculture and Forestry University
   - \url{https://rookie.rbind.io}
-# date: August, 2019
 output:   
   beamer_presentation:  
     incremental: false  
@@ -16,41 +15,15 @@ output:
     slide_level: 2
     keep_tex: true
     includes:
-      in_header: beamer_header.tex
+      in_header: beamer_header_template.tex
 classoption: "aspectratio=169"
+bibliography: [./bibliographies.bib]
 header-includes: 
-- \usepackage{enumitem}
-- \usepackage{booktabs,siunitx}
-- \usepackage{longtable}
-- \usepackage{array}
-- \usepackage{multirow}
-- \usepackage{wrapfig}
-- \usepackage{float}
-- \usepackage{colortbl}
-- \usepackage{pdflscape}
-- \usepackage{tabu}
-- \usepackage{threeparttable}
-- \usepackage{threeparttablex}
-- \usepackage{xcolor}
-- \usepackage{tikz}
-- \usepackage[skip=0.333\baselineskip]{caption}
 - \setbeamerfont{caption}{size=\tiny}
 - \setbeamertemplate{footline}[page number]
 - \AtBeginSection{}
 - \AtBeginSubsection{}
-- \renewcommand\floatpagefraction{.9}
-- \renewcommand\topfraction{.9}
-- \renewcommand\bottomfraction{.9}
-- \renewcommand\textfraction{.1}   
-- \setcounter{totalnumber}{50}
-- \setcounter{topnumber}{50}
-- \setcounter{bottomnumber}{50}
-- \setlist[itemize,1]{leftmargin=2pt,itemindent=2pt}
-- \setlist[itemize,2]{leftmargin=6pt,itemindent=2pt}
-- \def\labelitemi{$\bullet$}
-- \def\labelitemii{$\diamond$}
-- \def\labelitemiii{\textbullet}
-bibliography: [./bibliographies.bib]
+- \setbeamersize{text margin left=5mm,text margin right=5mm}
 ---
 
 ```{r setup, include=FALSE}
@@ -72,19 +45,48 @@ options(scipen = 30, digits = 15)
 theme_set(theme_bw())
 ```
 
+# Experiments
+
+##
+
+- Experiments allow us to prove cause-and-effect relationships
+- An experiment involves applying a treatment to a subject, and seeing how it affects the outcome compared to other groups.
+- The experimenter must identify at least one explanatory variable (or factor) to manipulate, and at least one response variable to measure.
+- The items which receive (or don't receive) the treatments are called experimental units.
+  - when people are involved, they are commonly called subjects or participants
+- The specific values that the experimenter chooses for a factor are called the levels of the factor.
+- A treatment is a combination of specific levels from all the factors that an experimental unit receives.
+
+## Example
+
+A farm products manufacturer wants to determine if the yield of a crop is different when the soil is treated with three different types of fertilizer. 15 similar plots of land are planted with the same type of seed but are fertilized differently. At the end of the growing season, the mean yields from the plots will be compared.
+
+::: incremental
+
+- Identify the experimental units.
+  - $\longrightarrow$ Plots of land
+- Identify the factor(s) in the experiment, and the number of levels for each.
+  - $\longrightarrow$ Fertilizer (single factor) at 3 levels
+- Identify the number of treatments.
+  - $\longrightarrow$ Three
+- Identify the response variable measured.
+  - $\longrightarrow$ Mean plot yield
+
+:::
+
 # CRD (One way ANOVA)
 
 ## Completely Randomized Design (One way Analysis of Variance)
 
-\small
 - Involves selection of random samples from each of k different levels corresponding to the k populations, also the _treatments_ for this one-way classification. This design involves only one factor, the population from which the measurement comes -- hence the designation as a one-way classification.
 - To find out whether the difference exists among the $k$ population means, or not, the analysis of variance procedure provides one overall test to judge the equality of the k population means.
+
+##
+
+\small
 - A researcher is interested in the effects of five types of insecticides for use in controlling the boll weevil in cotton fields. Explain how to implement a completely randomized design to investigate the effects of the five insecticides on crop yield.
-  \begin{itemize}
-  \footnotesize
-  \item The only way to generate the equivalent of five random samples from the hypothetical populations corresponding to the five insecticides is to use a method called a randomized assignment.
-  \item A fixed number of cotton plants are chosen for treatment, and each is assigned a random number. Suppose that each sample is to have an equal number of measurements. Using a randomization device, you can assign the first n plants chosen to receive insecticide 1, the second n plants to receive insecticide 2, and so on, until all five treatments have been assigned.
-  \end{itemize}
+  - The only way to generate the equivalent of five random samples from the hypothetical populations corresponding to the five insecticides is to use a method called a randomized assignment.
+  - A fixed number of cotton plants are chosen for treatment, and each is assigned a random number. Suppose that each sample is to have an equal number of measurements. Using a randomization device, you can assign the first n plants chosen to receive insecticide 1, the second n plants to receive insecticide 2, and so on, until all five treatments have been assigned.
 
 ##
 
@@ -173,23 +175,6 @@ Where $Y_{ijt}$ is the observation pertaining to the t-th sampling unit for the 
 
 ##
 
-The analysis of variance (ANOVA) for such a design is given in \ref{tab:anova-rcbd-template}.
-
-```{r anova-rcbd-template}
-tribble(
-  ~"Sources of variation", ~"Degree of freedom", ~"Sum of squares (SS)", ~"Mean square (MS)", ~"Expected mean square (MS)", 
-  "Blocks", "$r - 1$", "SSB", NA, NA, 
-  "Treatments", "$v-1$", "SST", NA, "$\\sigma_s^2 + n \\sigma_e^2 + \\frac{rn}{v-1} \\sum_{i = 1}^v \\tau_i^2$", 
-  "Treatments x Blocks (experimental error)", "$(v-1)(r-1)$", "SSBT", "MSBT", "$\\sigma_s^2 + n \\sigma_e^2$", 
-  "Sampling error", "$rv(n-1)$", "SSSE", "MSSE", "$\\sigma_s^2$"
-) %>%
-  knitr::kable(escape = FALSE, booktabs = TRUE, caption = "ANOVA table for RCB designs") %>% 
-  kableExtra::kable_styling(font_size = 8) %>% 
-  kableExtra::column_spec(column = 1:5, width = c("6em", "5em", "5em", "5em", "8em"))
-```
-
-##
-
 ```{r rcbd-example1, fig.cap="Layout of 2x3 factorial RCBD in randomized experimental layout", out.width="55%", fig.width=7, fig.height=5, message=FALSE}
 
 trt_list <- list(c("SRI", "Conventional"), c("Basal", "Basal + Single \nTopdressed", "Basal + Double \nTopdressed"))
@@ -249,6 +234,24 @@ two_three_rcbd_gg <- do.call(gridExtra::grid.arrange,c(myplots, ncol=3))
 #        width = 8, height = 6, units = "in", dpi = 250)
 
 ```
+
+##
+
+The analysis of variance (ANOVA) for such a design is given in \ref{tab:anova-rcbd-template}.
+
+```{r anova-rcbd-template}
+tribble(
+  ~"Sources of variation", ~"Degree of freedom", ~"Sum of squares (SS)", ~"Mean square (MS)", ~"Expected mean square (MS)", 
+  "Blocks", "$r - 1$", "SSB", NA, NA, 
+  "Treatments", "$v-1$", "SST", NA, "$\\sigma_s^2 + n \\sigma_e^2 + \\frac{rn}{v-1} \\sum_{i = 1}^v \\tau_i^2$", 
+  "Treatments x Blocks (experimental error)", "$(v-1)(r-1)$", "SSBT", "MSBT", "$\\sigma_s^2 + n \\sigma_e^2$", 
+  "Sampling error", "$rv(n-1)$", "SSSE", "MSSE", "$\\sigma_s^2$"
+) %>%
+  knitr::kable(escape = FALSE, booktabs = TRUE, caption = "ANOVA table for RCB designs") %>% 
+  kableExtra::kable_styling(font_size = 8) %>% 
+  kableExtra::column_spec(column = 1:5, width = c("6em", "5em", "5em", "5em", "8em"))
+```
+
 
 ##
 
@@ -401,7 +404,7 @@ myplots <- lapply(split_block_df, function(x){
     #           arrow = NULL
     #           ) +
     geom_label(aes(plots, splots, label = tillage_dressing),
-                              color="black", label.size=rel(0.3)) +
+                              color="black", label.size=rel(0.28)) +
     labs(title=paste0("Replication ", unique(x$block)),
          x = NULL, y = NULL) +
     # coord_flip() +
@@ -467,8 +470,71 @@ tribble(
 
 ## Latin Square Design
 
+\bcolumns
+\column{0.4\textwidth}
+\small
+- Special case of ANOVA model with 3 factors.
+  - with the equal number of factor levels in all the independent variables
+- A $\nu \times \nu$ latin square is an arrangement of $\nu$ Latin letters into a $\nu \times \nu$ array (a table with $\nu$ rows and $\nu$ columns) in such a way that each letter occurs once in each row and once in each column.
+
+\column{0.6\textwidth}
+
+```{r latin-square-design, fig.cap="A 6 x 6 Latin square design replicated in 4 blocks.", out.width="88%", fig.width=6, fig.height=5}
+require(dae)
+non_random_latin_six <- bind_cols(fac.gen(list(row = c("I", "II", "III", "IV", "V", "VI"), 
+                       column = c(20, 40, 60, 80, 100, 120))),
+          treatment = factor(designLatinSqrSys(6), labels = LETTERS[2:7]))
+
+non_random_latin_six_wrep <- expand_grid(replication = factor(1:4, labels = c("R1", "R2", "R3", "R4")), non_random_latin_six)
+
+random_latin_six_wrep <- dae::designRandomize(allocated = non_random_latin_six_wrep[,"treatment"], 
+                            recipient = non_random_latin_six_wrep[, c("replication", "row", "column")],
+                            nested.recipients = list(column = "replication",
+                                                     row = "replication"),
+                            unit.permutation = TRUE)
+
+random_latin_six_wrep_split <- random_latin_six_wrep %>% 
+  group_split(replication)
+
+myplots <- lapply(random_latin_six_wrep_split, function(x){
+  p1 <- ggplot(x, aes(row, column, fill = `treatment`)) +
+    geom_tile(colour="white", size=1.5, stat="identity") +
+    scale_fill_discrete(c = 90, l = 95) +
+    geom_text(aes(row, column, label = treatment),
+                             color="black", size=rel(3)) +
+    labs(title=unique(x$replication),
+         x = NULL, y = NULL) +
+    coord_flip() +
+    theme_bw() +
+    theme(legend.position="none") + # removes all legend
+    theme(axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          axis.text.x = element_blank(),
+          axis.ticks = element_blank(),
+          plot.title = element_text(color = "darkblue", size = 10, hjust = 0.5))
+}
+)
+
+two_three_rcbd_gg <- do.call(gridExtra::grid.arrange,c(myplots, ncol=2))
+
+```
+
+\ecolumns
+
+##
+
+- A row block or a column block alone, ignoring the other of a Latin square design is analogous to a RCBD.
+- Each level of the treatment factor is observed $r = \nu$ times in a single Latin square block, $\therefore$ making replications of the square blocks unnecessary.
+  - $\Large \clubsuit$ less commonly, $s$ $\nu \times \nu$ Latin squares are pieced together ($\textrm{s-replicate Latin square}$). 
+- Latin square designs are often used in experiments involving subjects, especially where the subjects are allocated a sequence of treatments over time and where the time effect is thought to have a major effect on the response.
+
+<!-- In an experiment to compare the effects of $\nu$ drugs, the rows of the Latin square might correspond to $\nu$ subjects to whom the drugs are given, and the columns might correspond to $\nu$ time periods, with each subject receiving one drug during each time period. An experiment of this type, in which each subject receives a sequence of treatments, is called a crossover experiment. -->
+
+<!-- (Refer to Benish Ali video on youtube for an example based treatment of the topic) -->
+
 ## Split-split-plot design
 
+\small
 For a 5 x 3 x 3 factorial design, replicated 3 times, ANOVA of split-split-plot is shown in Table \ref{tab:anova-split-split-plot}.
 
 
@@ -493,17 +559,41 @@ tribble(
   "Error (c)", "$ab(r-1)(c-1) = 60$", NA, NA,
   "Total", "$rabc-1 = 134$", NA, NA
 ) %>% 
-  knitr::kable(booktabs = TRUE, caption = "ANOVA table for split split plot designs", escape = FALSE, longtable = TRUE) %>% 
-  kableExtra::kable_styling(font_size = 8) %>% 
+  knitr::kable(booktabs = TRUE, caption = "ANOVA table for split split plot designs", escape = FALSE, longtable = TRUE, linesep = "") %>% 
+  kableExtra::kable_styling(font_size = 7) %>% 
   kableExtra::add_indent(c(2:4, 6:8, 10:14))
 
 ```
 
-(task: Figure out how to draw design! hint: agricolae contains a dataset and analysis function for `ssp.plot`).
+<!-- (task: Figure out how to draw design! hint: agricolae contains a dataset and analysis function for `ssp.plot`). -->
 
 # Factorial experiments
 
+# Analysis of a series of experiments
+
 ##
+
+(Refer to Chapter 14 by the same name of the text  of Cox and Cochran)
+
+```{r}
+
+# Cox and Cochran (Page number 547)
+# Experiments were conducted in two counties of North Carolina in 1945 and 1946. In 1945, on each of the 6 sites, the amount of readily available phosphorus in the soil itself was estimated from soil samples by the modified Truog method. These amounts varied from 48 to 850 lb P2O5 per acre. The treatments comprised 5 different levels of application, 0, 40, 80, 120 and 160 lb P2O5 per acre.
+
+# Treatment totals for experiments conducted in sites 1 to 6 (in 100 lb)
+
+# read_csv("./data/cox_cochran_analysis_of_series_of_experiments.csv", skip = 1)
+```
+
+# Comparison of experimental designs
+
+##
+
+```{r comparison-experimental-designs, out.width="70%", fig.align='center'}
+# pdftools::pdf_convert("E:\\ddhakal\\000readables\\genetics_breeding\\plant_breeding\\Reviews\\Plant Breeding Reviews Vol 42.pdf", format = "png", pages = 127, dpi = 280, filenames = "./images/experimental-designs-comparison.png")
+knitr::include_graphics("./images/experimental-designs-comparison.png")
+```
+
 
 # Bibliography
 

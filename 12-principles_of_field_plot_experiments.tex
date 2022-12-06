@@ -93,8 +93,9 @@ University \and \url{https://rookie.rbind.io}}
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{-\maxdimen} % remove section numbering
-
-\usepackage{enumitem}
+\usepackage{setspace}
+\usepackage{wasysym}
+\usepackage{fontenc}
 \usepackage{booktabs,siunitx}
 \usepackage{longtable}
 \usepackage{array}
@@ -106,25 +107,40 @@ University \and \url{https://rookie.rbind.io}}
 \usepackage{tabu}
 \usepackage{threeparttable}
 \usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
 \usepackage{xcolor}
-\usepackage{tikz}
-\usepackage[skip=0.333\baselineskip]{caption}
+\usepackage{tikz} % required for image opacity change
+\usepackage[absolute,overlay]{textpos} % for text formatting
+\usepackage[skip=0.3\baselineskip]{caption}
+% \usepackage{newtxtext,newtxmath}% better than txfonts   
+
+% this font option is amenable for beamer
+\setbeamerfont{caption}{size=\tiny}
+\singlespacing
+
+\sisetup{per-mode=symbol}
+
+\newcommand\Myperm[2][^n]{\prescript{#1\mkern-2.5mu}{}P_{#2}}
+\newcommand\Mycomb[2][^n]{\prescript{#1\mkern-0.5mu}{}C_{#2}}
+
+% \setcounter{totalnumber}{50}
+% \setcounter{topnumber}{50}
+% \setcounter{bottomnumber}{50}
+% \setlist[itemize,1]{leftmargin=2pt,itemindent=2pt}
+% \setlist[itemize,2]{leftmargin=6pt,itemindent=2pt}
+% \def\labelitemi{$\bullet$}
+% \def\labelitemii{$\diamond$}
+% \def\labelitemiii{\textbullet}
 \setbeamerfont{caption}{size=\tiny}
 \setbeamertemplate{footline}[page number]
 \AtBeginSection{}
 \AtBeginSubsection{}
-\renewcommand\floatpagefraction{.9}
-\renewcommand\topfraction{.9}
-\renewcommand\bottomfraction{.9}
-\renewcommand\textfraction{.1}
-\setcounter{totalnumber}{50}
-\setcounter{topnumber}{50}
-\setcounter{bottomnumber}{50}
-\setlist[itemize,1]{leftmargin=2pt,itemindent=2pt}
-\setlist[itemize,2]{leftmargin=6pt,itemindent=2pt}
-\def\labelitemi{$\bullet$}
-\def\labelitemii{$\diamond$}
-\def\labelitemiii{\textbullet}
+\setbeamersize{text margin left=5mm,text margin right=5mm}
+\newcommand{\bcolumns}{\begin{columns}[T, onlytextwidth]}
+\newcommand{\ecolumns}{\end{columns}}
+\newcommand{\bdescription}{\begin{description}}
+\newcommand{\edescription}{\end{description}}
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
@@ -139,9 +155,46 @@ University \and \url{https://rookie.rbind.io}}
 \section{Principles of field plot
 experiments}\label{principles-of-field-plot-experiments}}
 
+\begin{frame}{}
+\protect\hypertarget{section}{}
+\begin{quote}
+To call the statistician after the experiment may be no more than asking him to perform a postmortem examination ...\\[1cm]
+
+... he may be able to say what the experiment died of. 
+
+\end{quote}
+
+\hfill \raggedright -- R.A. Fisher, 1938
+\end{frame}
+
+\begin{frame}{}
+\protect\hypertarget{section-1}{}
+\footnotesize
+
+\begin{itemize}[<+->]
+\tightlist
+\item
+  A new drug has been tested for its efficacy for control of high blood
+  pressure.
+\item
+  As a doctor, do you prescribe your patient the drug ?
+\end{itemize}
+
+\begin{columns}[T, onlytextwidth]
+\column{0.5\textwidth}
+
+\includegraphics[width=0.7\linewidth]{12-principles_of_field_plot_experiments_files/figure-beamer/unreplicated-design-1}
+
+\column{0.5\textwidth}
+
+\includegraphics[width=0.7\linewidth]{12-principles_of_field_plot_experiments_files/figure-beamer/replicated-design-1}
+
+\end{columns}
+\end{frame}
+
 \begin{frame}{Replication}
 \protect\hypertarget{replication}{}
-\begin{itemize}
+\begin{itemize}[<+->]
 \tightlist
 \item
   The repetition of experimental conditions so that the effects of
@@ -150,8 +203,8 @@ experiments}\label{principles-of-field-plot-experiments}}
 \item
   Experiments make use of replication when they contain multiple
   \alert{trials} that are executed under circumstances that are
-  nominally\footnote<.->{Refers to the degree of experimental control
-    that can actually be exerted in the study} identical.
+  nominally\footnote[frame]{Refers to the degree of experimental control that can actually be exerted in the study}
+  identical.
 \item
   Within this degree of attainable control, replication effectively
   reduces the random variation or noise in the comparisons examined in
@@ -161,13 +214,13 @@ experiments}\label{principles-of-field-plot-experiments}}
 \end{frame}
 
 \begin{frame}{}
-\protect\hypertarget{section}{}
-\begin{itemize}
+\protect\hypertarget{section-2}{}
+\begin{itemize}[<+->]
 \tightlist
 \item
   ``replication'' versus ``repeated measurements.''
 
-  \begin{itemize}
+  \begin{itemize}[<+->]
   \tightlist
   \item
     For example, suppose four subjects are each assigned to a drug and a
@@ -187,11 +240,66 @@ experiments}\label{principles-of-field-plot-experiments}}
 \end{itemize}
 \end{frame}
 
+\begin{frame}{}
+\protect\hypertarget{section-3}{}
+\begin{itemize}[<+->]
+\tightlist
+\item
+  How many replicates are enough ?
+
+  \begin{itemize}[<+->]
+  \tightlist
+  \item
+    Generally, the more, the better!
+  \item
+    Easier to differentiate similar means
+  \item
+    Better assessment of variation within plot area
+  \end{itemize}
+\item
+  But consider:
+
+  \begin{itemize}[<+->]
+  \tightlist
+  \item
+    land constraints,
+  \item
+    time constraints,
+  \item
+    material (chemical, planting materials, etc.) constraints,
+  \item
+    budgetary constraints
+  \end{itemize}
+\item
+  There are several simulation studies related to replication
+
+  \begin{itemize}[<+->]
+  \tightlist
+  \item
+    For single trials, eg. foliar fungicide programs at least 4
+    replicates are often recommended
+  \item
+    For soil borne diseases, including nematodes, 5-6 replications are
+    preferred owing to uneven distribution of organisms in the soil
+  \end{itemize}
+\item
+  There is a compromise between precision and cost.
+\item
+  What if replication is prohibitive ?
+
+  \begin{itemize}[<+->]
+  \tightlist
+  \item
+    Augment the trial
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
 \begin{frame}{Blocking}
 \protect\hypertarget{blocking}{}
 \footnotesize
 
-\begin{itemize}
+\begin{itemize}[<+->]
 \tightlist
 \item
   If a potential source of systematic variation is known, the experiment
@@ -210,13 +318,9 @@ experiments}\label{principles-of-field-plot-experiments}}
   For inferences to be broad in scope, the experimental conditions
   should be appropriately varied.
 \item
-  In this regard, blocking\footnote<.->{Blocking an experiment involves
-    dividing, or partitioning, the experimental units into groups called
-    blocks in such a way that the experimental units in each block are
-    intended to be relatively similar, so that treatments assigned to
-    experimental units in the same block can be compared under
-    relatively similar experimental conditions.} mainly serves two
-  purpose:
+  In this regard,
+  blocking\footnote[frame]{Blocking an experiment involves dividing, or partitioning, the experimental units into groups called blocks in such a way that the experimental units in each block are intended to be relatively similar, so that treatments assigned to experimental units in the same block can be compared under relatively similar experimental conditions.}
+  mainly serves two purpose:
 
   \begin{itemize}
   \scriptsize
@@ -226,9 +330,14 @@ experiments}\label{principles-of-field-plot-experiments}}
 \end{itemize}
 \end{frame}
 
+\begin{frame}{Addressing heterogeneity through blocking}
+\protect\hypertarget{addressing-heterogeneity-through-blocking}{}
+\begin{center}\includegraphics[width=0.95\linewidth]{./images/blocking_concept} \end{center}
+\end{frame}
+
 \begin{frame}{Randomization}
 \protect\hypertarget{randomization}{}
-\begin{itemize}
+\begin{itemize}[<+->]
 \tightlist
 \item
   The purpose of randomization is to prevent \emph{systematic and
@@ -236,13 +345,13 @@ experiments}\label{principles-of-field-plot-experiments}}
   experimenter.
 \end{itemize}
 
-\begin{itemize}
+\begin{itemize}[<+->]
 \tightlist
 \item
   Lack of a random assignment of experimental material or subjects
   leaves the experimental procedure open to \alert{experimenter bias}.
 
-  \begin{itemize}
+  \begin{itemize}[<+->]
   \tightlist
   \item
     a horticulturist may assign his or her favorite variety of
@@ -259,8 +368,8 @@ experiments}\label{principles-of-field-plot-experiments}}
 \end{frame}
 
 \begin{frame}{}
-\protect\hypertarget{section-1}{}
-\begin{itemize}
+\protect\hypertarget{section-4}{}
+\begin{itemize}[<+->]
 \tightlist
 \item
   Consider an experiment to compare the effects on blood pressure of
@@ -277,7 +386,7 @@ experiments}\label{principles-of-field-plot-experiments}}
   random number generator or a random number table.
 \end{itemize}
 
-\begin{itemize}
+\begin{itemize}[<+->]
 \tightlist
 \item
   The most common random number generators on computers or calculators
@@ -289,17 +398,20 @@ experiments}\label{principles-of-field-plot-experiments}}
 \end{itemize}
 \end{frame}
 
+\begin{frame}{Randomization: An Exercise in Spreadsheet}
+\protect\hypertarget{randomization-an-exercise-in-spreadsheet}{}
+\begin{center}\includegraphics[width=0.45\linewidth]{./images/random_number_generation_spreadsheet} \end{center}
+\end{frame}
+
 \begin{frame}{Comparison and local control}
 \protect\hypertarget{comparison-and-local-control}{}
-\small
-
-\begin{itemize}
+\begin{itemize}[<+->]
 \tightlist
 \item
   Experiments are controlled so as to isolate the differences between
   the treatments of interest, and to minimize extraneous variability so
   as to enable the sharpest possible statistical analyses (e.g., narrow
-  confidence intervals or powerful tests). \scriptsize
+  confidence intervals or powerful tests).
 \item
   In many instances, this high degree of control means that the data
   collected are actually representative of only a very special
@@ -308,29 +420,78 @@ experiments}\label{principles-of-field-plot-experiments}}
   experiment. As a result, meaningful inferences usually need to be
   based on comparisons within an experiment, with the idea that anything
   unusual, but common, to all trials in the experiment will ``cancel
-  out'' in the analysis. \small
-\item
-  ``Comparison'' often leads to the inclusion of one or more
-  experimental controls.
-
-  \begin{itemize}
-  \tightlist
-  \item
-    For example, in addition to the four carefully defined
-    ``experimental treatments,'' while evaluating pipeline varieties,
-    one or two ``locally adapted'' cultivars are included so as to
-    provide a comparison to what might have happened in a ``normal''
-    scenario or how would the ``local check'' perform in controlled
-    experimental conditions.
-  \end{itemize}
-\item
-  A large difference between responses form these treatment and
-  ``checks'' could indicate unanticipated influences of the experimental
-  procedure \emph{per se}; a small or negligible difference might be
-  viewed as support for the investigators' intent that ``checks'' are a
-  reasonable representation for genotypes suited to the target
-  environment.
+  out'' in the analysis.
 \end{itemize}
+\end{frame}
+
+\begin{frame}{}
+\protect\hypertarget{section-5}{}
+\begin{columns}[T, onlytextwidth]
+\column{0.6\textwidth}
+\begin{itemize}
+\item "Comparison" often leads to the inclusion of one or more experimental controls.
+  \begin{itemize}
+  \footnotesize
+  \item For example, in addition to the four carefully defined "experimental treatments", while evaluating pipeline varieties, one or two "locally adapted" cultivars are included so as to provide a comparison to what might have happened in a "normal" scenario or how would the "local check" perform in controlled experimental conditions.
+  \end{itemize}
+\item A large difference between responses form these treatment and "checks" could indicate unanticipated influences of the experimental procedure \textit{per se}; a small or negligible difference might be viewed as support for the investigators' intent that "checks" are a reasonable representation for genotypes suited to the target environment.
+\end{itemize}
+\column{0.4\textwidth}
+
+
+\begin{center}\includegraphics[width=0.98\linewidth]{./images/local_check} \end{center}
+
+\end{columns}
+\end{frame}
+
+\hypertarget{interpretation-of-results}{%
+\section{Interpretation of results}\label{interpretation-of-results}}
+
+\begin{frame}{Interpretation of results}
+\protect\hypertarget{interpretation-of-results-1}{}
+\begin{itemize}[<+->]
+\tightlist
+\item
+  Design of experiments enable uniformly control (or adjustment) of
+  environmental factors that are not a part of the treatments being
+  evaluated.
+\item
+  This uniformity is both an advantage and a weakness of a controlled
+  experiment.
+\item
+  Clearly the result of an experiment is, applicable only to conditions
+  that are the same as, or similar to, that under which the experiment
+  was conducted.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{}
+\protect\hypertarget{section-6}{}
+\begin{columns}
+\column{0.8\textwidth}
+A glass could be:
+\begin{itemize}
+\footnotesize
+\item Half full (optimist)
+\item Half empty (pessimist)
+\item Twice as big as it needs to be (project manager)
+\item Half the required amount of liquid for it to overflow (realist)
+\end{itemize}
+Idiosyncrasies:
+\begin{itemize}
+\footnotesize
+\item How it can be half full or half empty ? FULL is \alert{FULL} and EMPTY is \alert{EMPTY}.
+\item If completely full, \alert{half with air and half with water}.
+\item Only optimistic can \alert{see half empty}, how can they be a pessimist ?
+\item Half full could be the answer, if you think you have \alert{enough} there.
+\item Half empty could be the answer, if what you have is \alert{not sufficient}.
+\end{itemize}
+\column{0.2\textwidth}
+
+
+\includegraphics[width=0.8\linewidth]{./images/half-empty-glass} 
+
+\end{columns}
 \end{frame}
 
 \hypertarget{bibliography}{%

@@ -93,8 +93,9 @@ University \and \url{https://rookie.rbind.io}}
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{-\maxdimen} % remove section numbering
-
-\usepackage[shortlabels]{enumitem}
+\usepackage{setspace}
+\usepackage{wasysym}
+\usepackage{fontenc}
 \usepackage{booktabs,siunitx}
 \usepackage{longtable}
 \usepackage{array}
@@ -106,30 +107,40 @@ University \and \url{https://rookie.rbind.io}}
 \usepackage{tabu}
 \usepackage{threeparttable}
 \usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
 \usepackage{xcolor}
-\usepackage{tikz}
-\usepackage{caption}
-\captionsetup[table]{skip=0pt}
-\captionsetup[table]{belowskip=-2pt}
+\usepackage{tikz} % required for image opacity change
+\usepackage[absolute,overlay]{textpos} % for text formatting
+\usepackage[skip=0.3\baselineskip]{caption}
+% \usepackage{newtxtext,newtxmath}% better than txfonts   
+
+% this font option is amenable for beamer
+\setbeamerfont{caption}{size=\tiny}
+\singlespacing
+
+\sisetup{per-mode=symbol}
+
+\newcommand\Myperm[2][^n]{\prescript{#1\mkern-2.5mu}{}P_{#2}}
+\newcommand\Mycomb[2][^n]{\prescript{#1\mkern-0.5mu}{}C_{#2}}
+
+% \setcounter{totalnumber}{50}
+% \setcounter{topnumber}{50}
+% \setcounter{bottomnumber}{50}
+% \setlist[itemize,1]{leftmargin=2pt,itemindent=2pt}
+% \setlist[itemize,2]{leftmargin=6pt,itemindent=2pt}
+% \def\labelitemi{$\bullet$}
+% \def\labelitemii{$\diamond$}
+% \def\labelitemiii{\textbullet}
+\setbeamersize{text margin left=4mm,text margin right=4mm}
 \setbeamerfont{caption}{size=\tiny}
 \setbeamertemplate{footline}[page number]
 \AtBeginSection{}
 \AtBeginSubsection{}
-\renewcommand\floatpagefraction{.9}
-\renewcommand\topfraction{.9}
-\renewcommand\bottomfraction{.9}
-\renewcommand\textfraction{.1}
+\usepackage{tikz}
 \usetikzlibrary{mindmap}
-\setcounter{totalnumber}{50}
-\setcounter{topnumber}{50}
-\setcounter{bottomnumber}{50}
-\setlist[itemize,1]{leftmargin=2pt,itemindent=2pt}
-\setlist[itemize,2]{leftmargin=6pt,itemindent=2pt}
-\def\labelitemi{$\bullet$}
-\def\labelitemii{$\diamond$}
-\def\labelitemiii{\textbullet}
-\definecolor{darkgreen}{rgb}{0.01,0.96,0.03}
-\definecolor{black}{rgb}{0.01,0.001,0.01}
+\definecolor{darkgreen}{RGB}{12, 198, 23}
+\setbeamertemplate{items}[square]
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
@@ -146,38 +157,30 @@ Meaning}\label{statistics-origin-and-meaning}}
 
 \begin{frame}{Meaning}
 \protect\hypertarget{meaning}{}
+\begin{columns}
+\column{0.8\textwidth}
+
 \begin{itemize}
-\tightlist
-\item
-  Statistics must have started as a state arithmetic to assist a rural
-  who neeeded to know the wealth and numbers of other properties in
-  order to levy tax.
-\item
-  Gambling as games of chance to the theory of probability about the
-  middle of seventh century.
-\item
-  Statistical principles involve certain logical patterns, methods of
-  reasoning and critical thinking. Using the logical reasoning we draw
-  conclusions based on incomplete information about a phenomenon. The
-  Theory of Probability is used for this purpose. Thus there is a
-  linkage between probability theory and statistical principles.
-\item
-  A branch of mathematics dealing with the collection, analysis,
-  interpretation, and presentation of masses of numerical data (Merriam
-  webster)
-\item
-  In statistics, a single value has no meaning. At least two
-  observations must be needed for statistical analysis. The statistics
-  deals with group of individuals -- populations -- not a single object.
+\small
+\item Statistics must have started as a state arithmetic to assist a rural who neeeded to know the wealth and numbers of other properties in order to levy tax.
+\item Gambling as games of chance to the theory of probability about the middle of seventh century.
+\item Statistical principles involve certain logical patterns, methods of reasoning and critical thinking. Using the logical reasoning we draw conclusions based on incomplete information about a phenomenon. The Theory of Probability is used for this purpose. Thus there is a linkage between probability theory and statistical principles.
+\item A branch of mathematics dealing with the collection, analysis, interpretation, and presentation of masses of numerical data (Merriam webster)
+\item In statistics, a single value has no meaning. At least two observations must be needed for statistical analysis. The statistics deals with group of individuals -- populations -- not a single object.
 \end{itemize}
+\column{0.2\textwidth}
+
+\begin{figure}
+\includegraphics[width=0.7\linewidth]{images/use-lampost-while-drunk} \caption{Statistical lamp-post}\label{fig:statistical-lamppost}
+\end{figure}
+
+\end{columns}
 \end{frame}
 
 \begin{frame}{}
 \protect\hypertarget{section}{}
 \begin{block}{Definition}
-Statistics can be defined as the body of concepts, examples and methods dealing with collection, summarization, analysis and interpretation of data. -- R. Rangaswamy, 1995
-
-
+Statistics can be defined as the body of concepts, examples and methods dealing with collection, summarization, analysis and interpretation of data. -- R. Rangaswamy, 1995 \\[0.5cm]
 Statistics is the science, pure and applied, of developing and applying the techniques to deal with quantitative and qualitative information, such that uncertainity of inductive inference may be evaluatated. -- Steel and Torrie, 1960.
 \end{block}
 \end{frame}
@@ -377,7 +380,6 @@ Statistics is the science, pure and applied, of developing and applying the tech
 \end{itemize}
 
 \footnotesize
-\renewcommand{\labelitemi}{$\diamond$}
 
 \begin{itemize}
 \tightlist
@@ -426,72 +428,68 @@ Statistics is the science, pure and applied, of developing and applying the tech
 
 \begin{frame}{}
 \protect\hypertarget{section-5}{}
-\begin{itemize}
+\begin{description}[longest label]
 \small
-\item A \alert{parameter} is a numerical value that describes a characteristic of a population, while a \alert{statistic} is a numerical measurement that describes a characteristic of a sample.
-\item Before gathering data, we first consider the scope of our study by identifying the population. The population consists of all subjects/animals/specimens/plants, and so on, of interest.
+\item[Parameter] A numerical value that describes a characteristic of a population.
+\item[Statistic] A numerical measurement that describes a characteristic of a sample.
+\end{description}
+
+\footnotesize
+
+\begin{itemize}
+\tightlist
+\item
+  Before gathering data, we first consider the scope of our study by
+  identifying the population. The population consists of all
+  subjects/animals/specimens/plants, and so on, of interest.
+
   \begin{itemize}
   \footnotesize
   \item All poplar trees in Tikapur
   \item All people in Nepal with the height above 155 cm
   \end{itemize}
-\item Typically, we are unable to observe the entire population; therefore, we must be content with gathering data from a subset of the population, a sample of size $n$. From this sample we make inference about the population as a whole.
-\item Note the difference between biological meaning of individual sample (specimen) and the same term used in statistics.
+\item
+  Typically, we are unable to observe the entire population; therefore,
+  we must be content with gathering data from a subset of the
+  population, a sample of size \(n\). From this sample we make inference
+  about the population as a whole.
+\item
+  Note the difference between biological meaning of individual sample
+  (specimen) and the same term used in statistics.
 \end{itemize}
 \end{frame}
 
 \begin{frame}{Variables}
 \protect\hypertarget{variables}{}
+\begin{description}[longest label]
+\item[Variables] A quantitative and qualitative characteristic that varies from observation/unit to observation/unit in the same group.
+\item[Continuous variables] The variables for which fractional measurements are possible are termed as continuous variables. For example, In the range of 5 kgs-6 kgs yield of crop, the actual yield might be 5.12 or 5.43 kg.
+\item[Discrete/Discontinuous variables] The variables for which fractional measurements are not possible are called as discrete/discontinuous variables. For example, the number of grains per panicle of paddy can be counted in full numbers only like 80, 81, 82, etc. Discrete variables can further be classified into nominal and ordinal types. Nominal variables cannot be measured numerically, e.g., education, sex, honesty, etc. Ordinal variables can be numerically ordered. e.g., height as tall, medium and dwarf.
+\end{description}
+
+\footnotesize
+
 \begin{itemize}
 \tightlist
 \item
-  A quantitative and qualitative characteristic that varies from
-  observation/unit to observation/unit in the same group is called
-  variables.
+  The variables, continuous or discrete are denoted by capital letters
+  like ``X'' and ``Y.''
 \item
   Conventionally, the qualitative variables are termed as variables and
   quantitative variables are termed as attributes.
-\item
-  \textbf{Continuous variables}: The variables for which fractional
-  measurements are possible are termed as continuous variables. For
-  example, In the range of 5 kgs-6 kgs yield of crop, the actual yield
-  might be 5.12 or 5.43 kgs.
-\item
-  \textbf{Discrete/Discontinuous variables}: The variables for which
-  fractional measurements are not possible are called as
-  discrete/discontinuous variables. For example, the number of grains
-  per panicle of paddy can be counted in full numbers only like 80, 81,
-  82, etc. Discrete variables can futher be classified into nominal and
-  ordinal types. Nominal variables cannot be measured numerically, e.g.,
-  education, sex, honesty, etc. Ordinal variables can be numerically
-  ordered. e.g., height as tall, medium and dwarf.
-\item
-  The variables, continuous or discrete are denoted by capital letters
-  like ``X'' and ``Y.''
 \end{itemize}
 \end{frame}
 
 \begin{frame}{}
 \protect\hypertarget{section-6}{}
-\begin{itemize}
-\tightlist
-\item
-  \textbf{Variate}: Each individual figure is known as variate, that
-  varies from individual to individual.
-\item
-  \textbf{Variants}: An individual observation or value of any variable
-  is known as variants.
-\item
-  \textbf{Accurate}: Very close to the population parameter.
-\item
-  \textbf{Precise}: It is the higher degree of repeatablility.
-\item
-  \textbf{Statistic}: A value calculated from a sample to estimate a
-  population parameter is called as statistic.
-\item
-  \textbf{Deviation}: The difference between the observation and the
-  mean, i.e., between two values.
-\end{itemize}
+\begin{description}[longest label]
+\item[Variate] Each individual figure is known as variate, that varies from individual to individual.
+\item[Variants] An individual observation or value of any variable is known as variants.
+\item[Accurate] Very close to the population parameter.
+\item[Precise] It is the higher degree of repeatablility.
+\item[Statistic] A value calculated from a sample to estimate a population parameter is called as statistic.
+\item[Deviation] The difference between the observation and the mean, i.e., between two values.
+\end{description}
 \end{frame}
 
 \hypertarget{samping-methods}{%
@@ -607,7 +605,7 @@ household is a cluster of individuals living together. When a particular
 cluster is included in the sample, a census of every element in the
 cluster is taken.
 
-\begin{center}\includegraphics[width=0.45\linewidth]{./images/cluster_sampling} \end{center}
+\begin{center}\includegraphics[width=0.48\linewidth]{./images/cluster_sampling} \end{center}
 \end{frame}
 
 \begin{frame}{Multistage sampling}

@@ -93,7 +93,9 @@ University \and \url{https://rookie.rbind.io}}
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{-\maxdimen} % remove section numbering
-
+\usepackage{setspace}
+\usepackage{wasysym}
+\usepackage{fontenc}
 \usepackage{booktabs,siunitx}
 \usepackage{longtable}
 \usepackage{array}
@@ -105,9 +107,31 @@ University \and \url{https://rookie.rbind.io}}
 \usepackage{tabu}
 \usepackage{threeparttable}
 \usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
 \usepackage{xcolor}
-\usepackage{tikz}
-\usepackage{caption}
+\usepackage{tikz} % required for image opacity change
+\usepackage[absolute,overlay]{textpos} % for text formatting
+\usepackage[skip=0.3\baselineskip]{caption}
+% \usepackage{newtxtext,newtxmath}% better than txfonts   
+
+% this font option is amenable for beamer
+\setbeamerfont{caption}{size=\tiny}
+\singlespacing
+
+\sisetup{per-mode=symbol}
+
+\newcommand\Myperm[2][^n]{\prescript{#1\mkern-2.5mu}{}P_{#2}}
+\newcommand\Mycomb[2][^n]{\prescript{#1\mkern-0.5mu}{}C_{#2}}
+
+% \setcounter{totalnumber}{50}
+% \setcounter{topnumber}{50}
+% \setcounter{bottomnumber}{50}
+% \setlist[itemize,1]{leftmargin=2pt,itemindent=2pt}
+% \setlist[itemize,2]{leftmargin=6pt,itemindent=2pt}
+% \def\labelitemi{$\bullet$}
+% \def\labelitemii{$\diamond$}
+% \def\labelitemiii{\textbullet}
 \captionsetup[table]{skip=0pt}
 \captionsetup[table]{belowskip=-2pt}
 \setbeamerfont{caption}{size=\tiny}
@@ -524,6 +548,21 @@ interval. Therefore the median is estimated as: \(5.5 + 3.86 = 9.36\)
 
 \begin{frame}{}
 \protect\hypertarget{section-2}{}
+\begin{columns}[T, onlytextwidth]
+\column{0.6\textwidth}
+
+"A statistician drowned while crossing a river that was on average six inches deep"
+
+\column{0.4\textwidth}
+
+
+\includegraphics[width=0.75\linewidth]{./images/river_crossing} 
+
+\end{columns}
+\end{frame}
+
+\begin{frame}{}
+\protect\hypertarget{section-3}{}
 \begin{itemize}
 \tightlist
 \item
@@ -801,7 +840,7 @@ sample size is n.
 \end{frame}
 
 \begin{frame}{}
-\protect\hypertarget{section-3}{}
+\protect\hypertarget{section-4}{}
 \begin{itemize}
 \tightlist
 \item
@@ -836,7 +875,7 @@ Class interval & Frequency & Relative frequency\\
 \end{frame}
 
 \begin{frame}{}
-\protect\hypertarget{section-4}{}
+\protect\hypertarget{section-5}{}
 \begin{itemize}
 \tightlist
 \item
@@ -863,7 +902,7 @@ Class interval & Frequency & Relative frequency\\
 \end{frame}
 
 \begin{frame}{}
-\protect\hypertarget{section-5}{}
+\protect\hypertarget{section-6}{}
 \begin{columns}[T, onlytextwidth]
 \column{0.5\textwidth}
 
@@ -1006,7 +1045,7 @@ the number of beats for 30 seconds and multiplying by 2.
   Relative frequency histogram for data:
 \end{enumerate}
 
-\includegraphics[width=0.45\linewidth]{03.4-measures_of_central_tendency_frequency_distributions_files/figure-beamer/unnamed-chunk-3-1}
+\includegraphics[width=0.45\linewidth]{03.4-measures_of_central_tendency_frequency_distributions_files/figure-beamer/unnamed-chunk-4-1}
 
 The distribution is skewed to right because distribution presents long
 left tail.

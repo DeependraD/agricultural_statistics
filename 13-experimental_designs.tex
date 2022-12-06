@@ -93,8 +93,9 @@ University \and \url{https://rookie.rbind.io}}
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{-\maxdimen} % remove section numbering
-
-\usepackage{enumitem}
+\usepackage{setspace}
+\usepackage{wasysym}
+\usepackage{fontenc}
 \usepackage{booktabs,siunitx}
 \usepackage{longtable}
 \usepackage{array}
@@ -106,25 +107,41 @@ University \and \url{https://rookie.rbind.io}}
 \usepackage{tabu}
 \usepackage{threeparttable}
 \usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
 \usepackage{xcolor}
-\usepackage{tikz}
-\usepackage[skip=0.333\baselineskip]{caption}
+\usepackage{tikz} % required for image opacity change
+\usepackage[absolute,overlay]{textpos} % for text formatting
+\usepackage[skip=0.3\baselineskip]{caption}
+% \usepackage{newtxtext,newtxmath}% better than txfonts   
+
+% this font option is amenable for beamer
+\setbeamerfont{caption}{size=\tiny}
+\singlespacing
+
+\sisetup{per-mode=symbol}
+
+\newcommand\Myperm[2][^n]{\prescript{#1\mkern-2.5mu}{}P_{#2}}
+\newcommand\Mycomb[2][^n]{\prescript{#1\mkern-0.5mu}{}C_{#2}}
+
+% \setcounter{totalnumber}{50}
+% \setcounter{topnumber}{50}
+% \setcounter{bottomnumber}{50}
+% \setlist[itemize,1]{leftmargin=2pt,itemindent=2pt}
+% \setlist[itemize,2]{leftmargin=6pt,itemindent=2pt}
+% \def\labelitemi{$\bullet$}
+% \def\labelitemii{$\diamond$}
+% \def\labelitemiii{\textbullet}
+
+\newcommand{\bcolumns}{\begin{columns}[T, onlytextwidth]}
+\newcommand{\ecolumns}{\end{columns}}
+\newcommand{\bdescription}{\begin{description}}
+\newcommand{\edescription}{\end{description}}
 \setbeamerfont{caption}{size=\tiny}
 \setbeamertemplate{footline}[page number]
 \AtBeginSection{}
 \AtBeginSubsection{}
-\renewcommand\floatpagefraction{.9}
-\renewcommand\topfraction{.9}
-\renewcommand\bottomfraction{.9}
-\renewcommand\textfraction{.1}
-\setcounter{totalnumber}{50}
-\setcounter{topnumber}{50}
-\setcounter{bottomnumber}{50}
-\setlist[itemize,1]{leftmargin=2pt,itemindent=2pt}
-\setlist[itemize,2]{leftmargin=6pt,itemindent=2pt}
-\def\labelitemi{$\bullet$}
-\def\labelitemii{$\diamond$}
-\def\labelitemiii{\textbullet}
+\setbeamersize{text margin left=5mm,text margin right=5mm}
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
@@ -135,14 +152,92 @@ University \and \url{https://rookie.rbind.io}}
 \begin{frame}[allowframebreaks]
   \tableofcontents[hideallsubsections]
 \end{frame}
+\hypertarget{experiments}{%
+\section{Experiments}\label{experiments}}
+
+\begin{frame}{}
+\protect\hypertarget{section}{}
+\begin{itemize}
+\tightlist
+\item
+  Experiments allow us to prove cause-and-effect relationships
+\item
+  An experiment involves applying a treatment to a subject, and seeing
+  how it affects the outcome compared to other groups.
+\item
+  The experimenter must identify at least one explanatory variable (or
+  factor) to manipulate, and at least one response variable to measure.
+\item
+  The items which receive (or don't receive) the treatments are called
+  experimental units.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    when people are involved, they are commonly called subjects or
+    participants
+  \end{itemize}
+\item
+  The specific values that the experimenter chooses for a factor are
+  called the levels of the factor.
+\item
+  A treatment is a combination of specific levels from all the factors
+  that an experimental unit receives.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Example}
+\protect\hypertarget{example}{}
+A farm products manufacturer wants to determine if the yield of a crop
+is different when the soil is treated with three different types of
+fertilizer. 15 similar plots of land are planted with the same type of
+seed but are fertilized differently. At the end of the growing season,
+the mean yields from the plots will be compared.
+
+\begin{itemize}[<+->]
+\tightlist
+\item
+  Identify the experimental units.
+
+  \begin{itemize}[<+->]
+  \tightlist
+  \item
+    \(\longrightarrow\) Plots of land
+  \end{itemize}
+\item
+  Identify the factor(s) in the experiment, and the number of levels for
+  each.
+
+  \begin{itemize}[<+->]
+  \tightlist
+  \item
+    \(\longrightarrow\) Fertilizer (single factor) at 3 levels
+  \end{itemize}
+\item
+  Identify the number of treatments.
+
+  \begin{itemize}[<+->]
+  \tightlist
+  \item
+    \(\longrightarrow\) Three
+  \end{itemize}
+\item
+  Identify the response variable measured.
+
+  \begin{itemize}[<+->]
+  \tightlist
+  \item
+    \(\longrightarrow\) Mean plot yield
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
 \hypertarget{crd-one-way-anova}{%
 \section{CRD (One way ANOVA)}\label{crd-one-way-anova}}
 
 \begin{frame}{Completely Randomized Design (One way Analysis of
 Variance)}
 \protect\hypertarget{completely-randomized-design-one-way-analysis-of-variance}{}
-\small
-
 \begin{itemize}
 \tightlist
 \item
@@ -155,6 +250,15 @@ Variance)}
   To find out whether the difference exists among the \(k\) population
   means, or not, the analysis of variance procedure provides one overall
   test to judge the equality of the k population means.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{}
+\protect\hypertarget{section-1}{}
+\small
+
+\begin{itemize}
+\tightlist
 \item
   A researcher is interested in the effects of five types of
   insecticides for use in controlling the boll weevil in cotton fields.
@@ -162,15 +266,24 @@ Variance)}
   the effects of the five insecticides on crop yield.
 
   \begin{itemize}
-  \footnotesize
-  \item The only way to generate the equivalent of five random samples from the hypothetical populations corresponding to the five insecticides is to use a method called a randomized assignment.
-  \item A fixed number of cotton plants are chosen for treatment, and each is assigned a random number. Suppose that each sample is to have an equal number of measurements. Using a randomization device, you can assign the first n plants chosen to receive insecticide 1, the second n plants to receive insecticide 2, and so on, until all five treatments have been assigned.
+  \tightlist
+  \item
+    The only way to generate the equivalent of five random samples from
+    the hypothetical populations corresponding to the five insecticides
+    is to use a method called a randomized assignment.
+  \item
+    A fixed number of cotton plants are chosen for treatment, and each
+    is assigned a random number. Suppose that each sample is to have an
+    equal number of measurements. Using a randomization device, you can
+    assign the first n plants chosen to receive insecticide 1, the
+    second n plants to receive insecticide 2, and so on, until all five
+    treatments have been assigned.
   \end{itemize}
 \end{itemize}
 \end{frame}
 
 \begin{frame}{}
-\protect\hypertarget{section}{}
+\protect\hypertarget{section-2}{}
 \small
 
 Suppose there are \(k\) population means, \(\mu_1, \mu_2, ..., \mu_k\),
@@ -198,7 +311,7 @@ CF = \frac{(\sum x_{ij})^2}{n} = \frac{G^2}{n}
 \end{frame}
 
 \begin{frame}{}
-\protect\hypertarget{section-1}{}
+\protect\hypertarget{section-3}{}
 \small
 
 The Total SS is partitioned into two components. The first component,
@@ -247,7 +360,7 @@ third can be found by subtraction.
 \end{frame}
 
 \begin{frame}{}
-\protect\hypertarget{section-2}{}
+\protect\hypertarget{section-4}{}
 \small
 
 Each of the sources of variation, when divided by its appropriate degree
@@ -267,7 +380,7 @@ additive -- that is,
 \end{frame}
 
 \begin{frame}{}
-\protect\hypertarget{section-3}{}
+\protect\hypertarget{section-5}{}
 These two sources of variation and their respective degrees of freedom
 are combined to form the mean square as \(MS = SS/df\). The total
 variation in the experiment is then displayed in an analysis of variance
@@ -316,7 +429,14 @@ error distributed as \(N(0, \sigma_s^2)\).
 \end{frame}
 
 \begin{frame}{}
-\protect\hypertarget{section-4}{}
+\protect\hypertarget{section-6}{}
+\begin{figure}
+\includegraphics[width=0.55\linewidth]{13-experimental_designs_files/figure-beamer/rcbd-example1-1} \caption{Layout of 2x3 factorial RCBD in randomized experimental layout}\label{fig:rcbd-example1}
+\end{figure}
+\end{frame}
+
+\begin{frame}{}
+\protect\hypertarget{section-7}{}
 The analysis of variance (ANOVA) for such a design is given in
 \ref{tab:anova-rcbd-template}.
 
@@ -339,14 +459,7 @@ Sampling error & $rv(n-1)$ & SSSE & MSSE & $\sigma_s^2$\\
 \end{frame}
 
 \begin{frame}{}
-\protect\hypertarget{section-5}{}
-\begin{figure}
-\includegraphics[width=0.55\linewidth]{13-experimental_designs_files/figure-beamer/rcbd-example1-1} \caption{Layout of 2x3 factorial RCBD in randomized experimental layout}\label{fig:rcbd-example1}
-\end{figure}
-\end{frame}
-
-\begin{frame}{}
-\protect\hypertarget{section-6}{}
+\protect\hypertarget{section-8}{}
 \small
 
 The sum of squares due to different components of ANOVA can be obtained
@@ -377,7 +490,7 @@ r & $T_{1r}$ & $T_{2r}$ & $T_{ir}$ & $T_{vr}$ & $B_{.r}$\\
 \end{frame}
 
 \begin{frame}{}
-\protect\hypertarget{section-7}{}
+\protect\hypertarget{section-9}{}
 \small
 
 The sum of squares (S.S) due to different components of ANOVA can be
@@ -410,7 +523,7 @@ data - SSB - SST - SSBT
 \end{frame}
 
 \begin{frame}{}
-\protect\hypertarget{section-8}{}
+\protect\hypertarget{section-10}{}
 \small
 
 Using the expression of expected mean squares in the above ANOVA Table
@@ -439,7 +552,7 @@ recording (i.e., the entire plot is harvested) =
 \end{frame}
 
 \begin{frame}{}
-\protect\hypertarget{section-9}{}
+\protect\hypertarget{section-11}{}
 \small
 
 The efficiency of sampling as compared to complete enumeration:
@@ -467,7 +580,7 @@ Thus, \(n\) can be found by re-arranging the above expression.
 \end{frame}
 
 \begin{frame}{}
-\protect\hypertarget{section-10}{}
+\protect\hypertarget{section-12}{}
 Generally, the margin of error (d or D) is \(Z_{\alpha/2}\) times the
 value of coefficient of variation of \(\bar{Y}_{i...}\) based on the
 concept of \(100(1-\alpha)\%\), confidence intervals. Therefore,
@@ -511,14 +624,14 @@ consists then of r such replications.
 \end{frame}
 
 \begin{frame}{}
-\protect\hypertarget{section-11}{}
+\protect\hypertarget{section-13}{}
 \begin{figure}
 \includegraphics[width=0.55\linewidth]{13-experimental_designs_files/figure-beamer/split-plot-example1-1} \caption{Layout of Split plot design with main (Tillage operation) and sub (Fertilizer application) plot factors in randomized experimental layout}\label{fig:split-plot-example1}
 \end{figure}
 \end{frame}
 
 \begin{frame}{}
-\protect\hypertarget{section-12}{}
+\protect\hypertarget{section-14}{}
 \small
 
 It is useful to think of this arrangement as superimposing one RCBD on
@@ -537,7 +650,7 @@ being used.
 \end{frame}
 
 \begin{frame}{}
-\protect\hypertarget{section-13}{}
+\protect\hypertarget{section-15}{}
 \small
 
 Assuming no replicate x B interaction (since we are assuming
@@ -569,14 +682,71 @@ Total & $rab-1$ & $\sum_{i,j,k}{(y_{ijk} - \bar{y}_{...})^2}$\\
 
 \begin{frame}{Latin Square Design}
 \protect\hypertarget{latin-square-design}{}
+\bcolumns
+\column{0.4\textwidth}
+\small
+
+\begin{itemize}
+\tightlist
+\item
+  Special case of ANOVA model with 3 factors.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    with the equal number of factor levels in all the independent
+    variables
+  \end{itemize}
+\item
+  A \(\nu \times \nu\) latin square is an arrangement of \(\nu\) Latin
+  letters into a \(\nu \times \nu\) array (a table with \(\nu\) rows and
+  \(\nu\) columns) in such a way that each letter occurs once in each
+  row and once in each column.
+\end{itemize}
+
+\column{0.6\textwidth}
+
+\begin{figure}
+\includegraphics[width=0.88\linewidth]{13-experimental_designs_files/figure-beamer/latin-square-design-1} \caption{A 6 x 6 Latin square design replicated in 4 blocks.}\label{fig:latin-square-design}
+\end{figure}
+
+\ecolumns
 \end{frame}
 
-\begin{frame}[fragile]{Split-split-plot design}
+\begin{frame}{}
+\protect\hypertarget{section-16}{}
+\begin{itemize}
+\tightlist
+\item
+  A row block or a column block alone, ignoring the other of a Latin
+  square design is analogous to a RCBD.
+\item
+  Each level of the treatment factor is observed \(r = \nu\) times in a
+  single Latin square block, \(\therefore\) making replications of the
+  square blocks unnecessary.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \(\Large \clubsuit\) less commonly, \(s\) \(\nu \times \nu\) Latin
+    squares are pieced together (\(\textrm{s-replicate Latin square}\)).
+  \end{itemize}
+\item
+  Latin square designs are often used in experiments involving subjects,
+  especially where the subjects are allocated a sequence of treatments
+  over time and where the time effect is thought to have a major effect
+  on the response.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Split-split-plot design}
 \protect\hypertarget{split-split-plot-design}{}
+\small
+
 For a 5 x 3 x 3 factorial design, replicated 3 times, ANOVA of
 split-split-plot is shown in Table \ref{tab:anova-split-split-plot}.
 
-\begingroup\fontsize{8}{10}\selectfont
+\begingroup\fontsize{7}{9}\selectfont
 
 \begin{longtable}[t]{llll}
 \caption{\label{tab:anova-split-split-plot}ANOVA table for split split plot designs}\\
@@ -588,13 +758,11 @@ Mainplot &  &  & \\
 \hspace{1em}Main-plot factor (A) & $(a-1) = 3-1 = 2$ &  & \\
 \hspace{1em}Error (a) & $(r-1)(a-1) = 8$ &  & \\
 Subplot &  &  & \\
-\addlinespace
 \hspace{1em}Subplot factor (B) & $(b-1) = 2$ &  & \\
 \hspace{1em}A x B & $(a-1)(b-1) = 8$ &  & \\
 \hspace{1em}Error(b) & $a(r-1)(b-1) = 20$ &  & \\
 Sub-sub plot &  &  & \\
 \hspace{1em}Sub-sub plot factor (C) & $(c-1) = 2$ &  & \\
-\addlinespace
 \hspace{1em}A x C & $(a-1)(c-1) = 8$ &  & \\
 \hspace{1em}B x C & $(b-1)(c-1) = 4$ &  & \\
 \hspace{1em}A x B x C & $(a-1)(b-1)(c-1) = 16$ &  & \\
@@ -603,16 +771,22 @@ Total & $rabc-1 = 134$ &  & \\
 \bottomrule
 \end{longtable}
 \endgroup{}
-
-(task: Figure out how to draw design! hint: agricolae contains a dataset
-and analysis function for \texttt{ssp.plot}).
 \end{frame}
 
 \hypertarget{factorial-experiments}{%
 \section{Factorial experiments}\label{factorial-experiments}}
 
 \begin{frame}{}
-\protect\hypertarget{section-14}{}
+\protect\hypertarget{section-17}{}
+\end{frame}
+
+\hypertarget{comparison-of-experimental-designs}{%
+\section{Comparison of experimental
+designs}\label{comparison-of-experimental-designs}}
+
+\begin{frame}{}
+\protect\hypertarget{section-18}{}
+\begin{center}\includegraphics[width=0.7\linewidth]{./images/experimental-designs-comparison} \end{center}
 \end{frame}
 
 \hypertarget{bibliography}{%

@@ -16,45 +16,18 @@ output:
     slide_level: 2
     keep_tex: true
     includes:
-      in_header: beamer_header.tex
+      in_header: beamer_header_template.tex
 classoption: "aspectratio=169"
 header-includes: 
-- \usepackage[shortlabels]{enumitem}
-- \usepackage{booktabs,siunitx}
-- \usepackage{longtable}
-- \usepackage{array}
-- \usepackage{multirow}
-- \usepackage{wrapfig}
-- \usepackage{float}
-- \usepackage{colortbl}
-- \usepackage{pdflscape}
-- \usepackage{tabu}
-- \usepackage{threeparttable}
-- \usepackage{threeparttablex}
-- \usepackage{xcolor}
-- \usepackage{tikz}
-- \usepackage{caption}
-- \captionsetup[table]{skip=0pt}
-- \captionsetup[table]{belowskip=-2pt}
+- \setbeamersize{text margin left=4mm,text margin right=4mm} 
 - \setbeamerfont{caption}{size=\tiny}
 - \setbeamertemplate{footline}[page number]
 - \AtBeginSection{}
 - \AtBeginSubsection{}
-- \renewcommand\floatpagefraction{.9}
-- \renewcommand\topfraction{.9}
-- \renewcommand\bottomfraction{.9}
-- \renewcommand\textfraction{.1}   
+- \usepackage{tikz}
 - \usetikzlibrary{mindmap}
-- \setcounter{totalnumber}{50}
-- \setcounter{topnumber}{50}
-- \setcounter{bottomnumber}{50}
-- \setlist[itemize,1]{leftmargin=2pt,itemindent=2pt}
-- \setlist[itemize,2]{leftmargin=6pt,itemindent=2pt}
-- \def\labelitemi{$\bullet$}
-- \def\labelitemii{$\diamond$}
-- \def\labelitemiii{\textbullet}
-- \definecolor{darkgreen}{rgb}{0.01,0.96,0.03}
-- \definecolor{black}{rgb}{0.01,0.001,0.01}
+- \definecolor{darkgreen}{RGB}{12, 198, 23}
+- \setbeamertemplate{items}[square]
 bibliography: [./bibliographies.bib]
 ---
 
@@ -80,18 +53,31 @@ theme_set(theme_bw())
 
 ## Meaning
 
-- Statistics must have started as a state arithmetic to assist a rural who neeeded to know the wealth and numbers of other properties in order to levy tax.
-- Gambling as games of chance to the theory of probability about the middle of seventh century.
-- Statistical principles involve certain logical patterns, methods of reasoning and critical thinking. Using the logical reasoning we draw conclusions based on incomplete information about a phenomenon. The Theory of Probability is used for this purpose. Thus there is a linkage between probability theory and statistical principles.
-- A branch of mathematics dealing with the collection, analysis, interpretation, and presentation of masses of numerical data (Merriam webster)
-- In statistics, a single value has no meaning. At least two observations must be needed for statistical analysis. The statistics deals with group of individuals -- populations -- not a single object.
+\begin{columns}
+\column{0.8\textwidth}
+
+\begin{itemize}
+\small
+\item Statistics must have started as a state arithmetic to assist a rural who neeeded to know the wealth and numbers of other properties in order to levy tax.
+\item Gambling as games of chance to the theory of probability about the middle of seventh century.
+\item Statistical principles involve certain logical patterns, methods of reasoning and critical thinking. Using the logical reasoning we draw conclusions based on incomplete information about a phenomenon. The Theory of Probability is used for this purpose. Thus there is a linkage between probability theory and statistical principles.
+\item A branch of mathematics dealing with the collection, analysis, interpretation, and presentation of masses of numerical data (Merriam webster)
+\item In statistics, a single value has no meaning. At least two observations must be needed for statistical analysis. The statistics deals with group of individuals -- populations -- not a single object.
+\end{itemize}
+\column{0.2\textwidth}
+
+```{r statistical-lamppost, out.width="70%", fig.cap="Statistical lamp-post"}
+knitr::include_graphics("images/use-lampost-while-drunk.jpg")
+```
+
+\end{columns}
+
+<!-- (Refer to Chapter 6 on 'An informal history of statistics', Plant Breeding Reviews, Volume 17.) -->
 
 ##
 
 \begin{block}{Definition}
-Statistics can be defined as the body of concepts, examples and methods dealing with collection, summarization, analysis and interpretation of data. -- R. Rangaswamy, 1995
-
-
+Statistics can be defined as the body of concepts, examples and methods dealing with collection, summarization, analysis and interpretation of data. -- R. Rangaswamy, 1995 \\[0.5cm]
 Statistics is the science, pure and applied, of developing and applying the techniques to deal with quantitative and qualitative information, such that uncertainity of inductive inference may be evaluatated. -- Steel and Torrie, 1960.
 \end{block}
 
@@ -196,7 +182,6 @@ Statistics is the science, pure and applied, of developing and applying the tech
 - The set of units for which we have obtained data is referred to as the \alert{sample}.
 
 \footnotesize
-\renewcommand{\labelitemi}{$\diamond$}
 - The population is the complete collection of subjects whose study is of interest.
 - **Population** refers to an aggregate of individual possessing the specified characteristics.
 - A sample is a part of the population of interest, a subset selected by some means from the population.
@@ -232,35 +217,44 @@ knitr::include_graphics("./images/population_vs_sample.png")
 
 ##
 
-\begin{itemize}
+\begin{description}[longest label]
 \small
-\item A \alert{parameter} is a numerical value that describes a characteristic of a population, while a \alert{statistic} is a numerical measurement that describes a characteristic of a sample.
-\item Before gathering data, we first consider the scope of our study by identifying the population. The population consists of all subjects/animals/specimens/plants, and so on, of interest.
+\item[Parameter] A numerical value that describes a characteristic of a population.
+\item[Statistic] A numerical measurement that describes a characteristic of a sample.
+\end{description}
+
+\footnotesize
+- Before gathering data, we first consider the scope of our study by identifying the population. The population consists of all subjects/animals/specimens/plants, and so on, of interest.
   \begin{itemize}
   \footnotesize
   \item All poplar trees in Tikapur
   \item All people in Nepal with the height above 155 cm
   \end{itemize}
-\item Typically, we are unable to observe the entire population; therefore, we must be content with gathering data from a subset of the population, a sample of size $n$. From this sample we make inference about the population as a whole.
-\item Note the difference between biological meaning of individual sample (specimen) and the same term used in statistics.
-\end{itemize}
+- Typically, we are unable to observe the entire population; therefore, we must be content with gathering data from a subset of the population, a sample of size $n$. From this sample we make inference about the population as a whole.
+- Note the difference between biological meaning of individual sample (specimen) and the same term used in statistics.
 
 ## Variables
 
-- A quantitative and qualitative characteristic that varies from observation/unit to observation/unit in the same group is called variables.
-- Conventionally, the qualitative variables are termed as variables and quantitative variables are termed as attributes.
-- **Continuous variables**: The variables for which fractional measurements are possible are termed as continuous variables. For example, In the range of 5 kgs-6 kgs yield of crop, the actual yield might be 5.12 or 5.43 kgs.
-- **Discrete/Discontinuous variables**: The variables for which fractional measurements are not possible are called as discrete/discontinuous variables. For example, the number of grains per panicle of paddy can be counted in full numbers only like 80, 81, 82, etc. Discrete variables can futher be classified into nominal and ordinal types. Nominal variables cannot be measured numerically, e.g., education, sex, honesty, etc. Ordinal variables can be numerically ordered. e.g., height as tall, medium and dwarf.
+\begin{description}[longest label]
+\item[Variables] A quantitative and qualitative characteristic that varies from observation/unit to observation/unit in the same group.
+\item[Continuous variables] The variables for which fractional measurements are possible are termed as continuous variables. For example, In the range of 5 kgs-6 kgs yield of crop, the actual yield might be 5.12 or 5.43 kg.
+\item[Discrete/Discontinuous variables] The variables for which fractional measurements are not possible are called as discrete/discontinuous variables. For example, the number of grains per panicle of paddy can be counted in full numbers only like 80, 81, 82, etc. Discrete variables can further be classified into nominal and ordinal types. Nominal variables cannot be measured numerically, e.g., education, sex, honesty, etc. Ordinal variables can be numerically ordered. e.g., height as tall, medium and dwarf.
+\end{description}
+
+\footnotesize
 - The variables, continuous or discrete are denoted by capital letters like "X" and "Y".
+- Conventionally, the qualitative variables are termed as variables and quantitative variables are termed as attributes.
 
 ##
 
-- **Variate**: Each individual figure is known as variate, that varies from individual to individual.
-- **Variants**: An individual observation or value of any variable is known as variants.
-- **Accurate**: Very close to the population parameter.
-- **Precise**: It is the higher degree of repeatablility.
-- **Statistic**: A value calculated from a sample to estimate a population parameter is called as statistic.
-- **Deviation**: The difference between the observation and the mean, i.e., between two values.
+\begin{description}[longest label]
+\item[Variate] Each individual figure is known as variate, that varies from individual to individual.
+\item[Variants] An individual observation or value of any variable is known as variants.
+\item[Accurate] Very close to the population parameter.
+\item[Precise] It is the higher degree of repeatablility.
+\item[Statistic] A value calculated from a sample to estimate a population parameter is called as statistic.
+\item[Deviation] The difference between the observation and the mean, i.e., between two values.
+\end{description}
 	
 # Samping methods
 
@@ -334,7 +328,7 @@ Sometimes the population to be sampled is ordered, such as an alphabetized list 
 
 When the available sampling units are group of elements, random sampling performed on such units comprise a culstered sampling. For example, a household is a cluster of individuals living together. When a particular cluster is included in the sample, a census of every element in the cluster is taken.
 
-```{r cluster-sampling, fig.align='center'}
+```{r cluster-sampling, fig.align='center', out.width="45%"}
 knitr::include_graphics("./images/cluster_sampling.png")
 ```
 

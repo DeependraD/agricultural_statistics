@@ -6,7 +6,6 @@ institute:
   - Assistant Professor
   - Agriculture and Forestry University
   - \url{https://rookie.rbind.io}
-# date: August, 2019
 output:   
   beamer_presentation:  
     incremental: false  
@@ -16,23 +15,9 @@ output:
     slide_level: 2
     keep_tex: true
     includes:
-      in_header: beamer_header.tex
+      in_header: beamer_header_template.tex
 classoption: "aspectratio=169"
 header-includes: 
-- \usepackage{booktabs,siunitx}
-- \usepackage{longtable}
-- \usepackage{array}
-- \usepackage{multirow}
-- \usepackage{wrapfig}
-- \usepackage{float}
-- \usepackage{colortbl}
-- \usepackage{pdflscape}
-- \usepackage{tabu}
-- \usepackage{threeparttable}
-- \usepackage{threeparttablex}
-- \usepackage{xcolor}
-- \usepackage{tikz}
-- \usepackage{caption}
 - \captionsetup[table]{skip=0pt}
 - \captionsetup[table]{belowskip=-2pt}
 - \setbeamerfont{caption}{size=\tiny}
@@ -330,6 +315,21 @@ $$
 $$
 
 - What do you think will happen to the mean and median of a data set on \textbf{borrowing periods}?
+
+##
+
+\begin{columns}[T, onlytextwidth]
+\column{0.5\textwidth}
+
+"A statistician drowned while crossing a river that was on average six inches deep"
+
+\column{0.5\textwidth}
+
+```{r, out.width="88%"}
+knitr::include_graphics("./images/river_crossing.jpg")
+```
+
+\end{columns}
 
 ##
 

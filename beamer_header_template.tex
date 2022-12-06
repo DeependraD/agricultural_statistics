@@ -17,7 +17,7 @@
 \usepackage{xcolor}
 \usepackage{tikz} % required for image opacity change
 \usepackage[absolute,overlay]{textpos} % for text formatting
-\usepackage[skip=0.333\baselineskip]{caption}
+\usepackage[skip=0.3\baselineskip]{caption}
 % \usepackage{newtxtext,newtxmath}% better than txfonts   
 
 % this font option is amenable for beamer
@@ -28,3 +28,17 @@
 
 \newcommand\Myperm[2][^n]{\prescript{#1\mkern-2.5mu}{}P_{#2}}
 \newcommand\Mycomb[2][^n]{\prescript{#1\mkern-0.5mu}{}C_{#2}}
+
+% \setcounter{totalnumber}{50}
+% \setcounter{topnumber}{50}
+% \setcounter{bottomnumber}{50}
+% \setlist[itemize,1]{leftmargin=2pt,itemindent=2pt}
+% \setlist[itemize,2]{leftmargin=6pt,itemindent=2pt}
+% \def\labelitemi{$\bullet$}
+% \def\labelitemii{$\diamond$}
+% \def\labelitemiii{\textbullet}
+
+\newcommand{\bcolumns}{\begin{columns}[T, onlytextwidth]}
+\newcommand{\ecolumns}{\end{columns}}
+\newcommand{\bdescription}{\begin{description}}
+\newcommand{\edescription}{\end{description}}
